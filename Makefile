@@ -24,6 +24,8 @@ COULEUR		= \033[01;34m
 
 SUCESS		= [\033[1;32mOK\033[00m]
 
+GIT 		= https://github.com/ptruffault/minishell.git
+
 all: $(NAME)
 
 clear:
@@ -73,7 +75,7 @@ load: clear fclean
 	@rm -rf includes
 	@rm -rf libft
 	@rm -rf auteur
-	@git clone https://github.com/ptruffault/ft_ls.git
+	@git clone $(GIT)
 	@cp -r ft_ls/srcs .
 	@cp -r ft_ls/includes .
 	@cp -r ft_ls/libft .
