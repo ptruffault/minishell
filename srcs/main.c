@@ -4,15 +4,17 @@ char	*get_cmd(char *input)
 {
 	char *cmd;
 	int i;
+	int j;
 
 	i = 0;
-	while (IS_SPACE(*input))
-		*input++;
-	while (!(IS_SPACE(input[i])) && input[i] != '\0')
+	j = 0;
+	while (IS_SPACE(input[j]))
+		j++;
+	while (!(IS_SPACE(input[j + i])) && input[j + i] != '\0')
 		i++;
 	if (!(cmd = ft_strnew(i)))
 		return (NULL);
-	cmd = ft_strncpy(cmd, input, i);
+	cmd = ft_strncpy(cmd, &input[j], i);
 	return (cmd);
 }
 
@@ -40,7 +42,7 @@ int check_cmd(char *input)
 	return (1);
 }
 
-int main(int argc, char **argv, char **env)
+int main(void)
 {
 	char *input;
 

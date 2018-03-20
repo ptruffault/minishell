@@ -26,6 +26,8 @@ SUCESS		= [\033[1;32mOK\033[00m]
 
 GIT 		= https://github.com/ptruffault/minishell.git
 
+FOLDERS 	= minishell/
+
 all: $(NAME)
 
 clear:
@@ -65,6 +67,9 @@ no_flag: clear small_clean
 	@gcc $(SRC) -I $(LIB_PATH) $(LIB) -o $(NAME)
 	@echo "$(SUCESS)"
 
+zam: fast_re
+	./$(NAME)
+
 save: clear fclean
 	@git add *
 	@git commit -m "make save"
@@ -76,11 +81,11 @@ load: clear fclean
 	@rm -rf libft
 	@rm -rf auteur
 	@git clone $(GIT)
-	@cp -r ft_ls/srcs .
-	@cp -r ft_ls/includes .
-	@cp -r ft_ls/libft .
-	@cp ft_ls/auteur .
-	@rm -rf ft_ls
+	@cp -r $(FOLDERS)srcs .
+	@cp -r $(FOLDERS)includes .
+	@cp -r $(FOLDERS)libft .
+	@cp $(FOLDERS)auteur .
+	@rm -rf $(FOLDERS)
 	@echo "$(SUCESS)"
 
 .PHONY: all small_clean clean fclean re fast_re
