@@ -17,6 +17,7 @@ LIB_PATH	= ./libft/
 LIB			= -Llibft/ -lft
 
 SRC			= srcs/main.c \
+			 srcs/envv.c \
 			
 CFLAGS		= -Wall -Werror -Wextra
 

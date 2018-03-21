@@ -86,7 +86,11 @@ int		get_next_line(const int fd, char **line);
 char 	*ft_get_input(void);
 char	*ft_caps_lock(char *str);
 int		ft_strcmp_castless(char *s1, char *s2);
+
+void	ft_freestrarr(char **arr);
 void	*ft_realloc(void *ptr, size_t prev_size, size_t new_size);
+int		ft_str_startwith(char *s1, char *s2);
+
 t_list	*ft_lstnew(const void *content, size_t content_size);
 void	ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 void	ft_lstdelone(t_list **alst, void (*del)(void*, size_t));

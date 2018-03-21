@@ -11,4 +11,7 @@
 # include "../libft/libft.h"
 
 # define IS_SPACE(x) (x == ' ' || x == '\t' || x == '\r' || x == '\f')
+
+char	**ft_init_envv(char **envv);
+char	*get_envv_var(char **envv, char *str);
 #endif
