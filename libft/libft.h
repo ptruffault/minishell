@@ -30,6 +30,8 @@
 
 # define BUFF_SIZE 256
 
+# define IS_SPACE(x) (x == ' ' || x == '\t' || x == '\r' || x == '\f')
+
 #define BLEUCLAIR 	"\033[01;34m"
 #define ROUGE 		"\033[00;31m"
 #define BLEU 		"\033[00;34m"
@@ -43,7 +45,6 @@
 
 typedef	struct s_list	t_list;
 
-// given by opendir -> traitement comme dans ft_ls
 typedef struct s_file t_file;
 struct s_file
 {
@@ -90,6 +91,7 @@ int		ft_strcmp_castless(char *s1, char *s2);
 void	ft_freestrarr(char **arr);
 void	*ft_realloc(void *ptr, size_t prev_size, size_t new_size);
 int		ft_str_startwith(char *s1, char *s2);
+char	**ft_strsplit_whitespace(char const *s);
 
 t_list	*ft_lstnew(const void *content, size_t content_size);
 void	ft_lstiter(t_list *lst, void (*f)(t_list *elem));

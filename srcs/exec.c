@@ -1,12 +1,12 @@
 #include "../includes/minishell.h"
 
-int		run_cmd(char *bin_path, char **envv)
+int		run_cmd(char *bin_path, char **envv, char **input)
 {
 	pid_t	pid;
 
 	pid = fork();
 	if (pid == 0)
-		execve(bin_path, NULL, envv);
+		execve(bin_path, input, envv);
 	else if (pid < 0)
 	{
 		free(bin_path);

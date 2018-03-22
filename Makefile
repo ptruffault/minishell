@@ -18,6 +18,8 @@ LIB			= -Llibft/ -lft
 
 SRC			= srcs/main.c \
 			 srcs/envv.c \
+			 srcs/check_cmd.c \
+			 srcs/exec.c \
 			
 CFLAGS		= -Wall -Werror -Wextra
 

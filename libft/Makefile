@@ -78,7 +78,8 @@ SRC = ./ft_memset.c \
 	  ./ft_sort_tfile.c \
 	  ./ft_put_tfile.c \
 	  ./ft_freestrarr.c \
-	  ./ft_str_startwith.c
+	  ./ft_str_startwith.c \
+	  ./ft_strsplit_whitespace.c
 
 OBJ = $(SRC:.c=.o)
 

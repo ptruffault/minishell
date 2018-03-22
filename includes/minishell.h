@@ -15,4 +15,5 @@
 char	**ft_init_envv(char **envv);
 char	*get_envv_var(char **envv, char *str);
 int 	check_cmd(char *input, char **envv);
+int		run_cmd(char *bin_path, char **envv, char **input);
 #endif
