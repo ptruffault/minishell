@@ -20,51 +20,50 @@ static int	ft_nw(char *s)
 	return (n);
 }
 
-static int	ft_lenword(char const *s, int i, int cstm)
+char	*get_next_word(char *str)
 {
-	cstm = 0;
-	while (!(IS_SPACE(s[i]) && s[i]))
-	{
-		cstm++;
-		i++;
-	}
-	return (cstm);
-}
-
-static void	ft_j_loop(char const *s, char **new, int newindex)
-{
+	char *word;
 	int j;
 
-	j = -1;
-	while (s[++j] && !(IS_SPACE(s[j])))
-		new[newindex][j] = s[j];
-	new[newindex][j] = '\0';
+	j = 0;
+	while (!(IS_SPACE(str[j])) && str[j] != '\0')
+		j++;
+	if (j != '\0')
+	{
+		if (!(word = ft_strnew(j)))
+		{
+			ft_putendl_fd("ft_strsplit_whitespace : allocation failed", 2);
+			return (NULL);
+		}
+		word = ft_strncpy(word, str, j);
+	}
+	return (word);
 }
 
-char		**ft_strsplit_whitespace(char const *s)
+char	**ft_strsplit_whitespace(char *str)
 {
-	int		cstm;
-	int		i;
-	char	**new;
-	int		newindex;
+	int i;
+	int k;
+	char **tab;
 
-	if (!s || !(new = (char **)malloc(sizeof(char*) * ft_nw((char *)s) + 1)))
-		return (NULL);
-	newindex = 0;
 	i = 0;
-	while (s[i])
+	k = 0;
+	tab = NULL;
+	if (!(tab = (char **)malloc(sizeof(char *) * ft_nw(str) + 1)))
 	{
-		while (s[i] && IS_SPACE(s[i]))
+		ft_putendl_fd("ft_strsplit_whitespace : allocation failed", 2);
+		return (NULL);
+	} 
+	while (str[i] != '\0')
+	{
+		while (IS_SPACE(str[i]))
 			i++;
-		if (!s[i])
-			break ;
-		cstm = ft_lenword(s, i, cstm);
-		new[newindex] = ft_strnew(cstm);
-		if (!new[newindex])
-			return (NULL);
-		ft_j_loop(s + i, new, newindex++);
-		i += cstm;
+		if (str[i] != '\0')
+		{
+			tab[k] = get_next_word(&str[i]);
+			i = i + ft_strlen(tab[k++]);
+		}
 	}
-	new[newindex] = NULL;
-	return (new);
+	tab[k] = NULL;
+	return (tab);
 }

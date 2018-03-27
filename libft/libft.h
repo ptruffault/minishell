@@ -91,7 +91,7 @@ int		ft_strcmp_castless(char *s1, char *s2);
 void	ft_freestrarr(char **arr);
 void	*ft_realloc(void *ptr, size_t prev_size, size_t new_size);
 int		ft_str_startwith(char *s1, char *s2);
-char	**ft_strsplit_whitespace(char const *s);
+char	**ft_strsplit_whitespace(char *s);
 
 t_list	*ft_lstnew(const void *content, size_t content_size);
 void	ft_lstiter(t_list *lst, void (*f)(t_list *elem));

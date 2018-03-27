@@ -7,7 +7,7 @@ void	ft_freestrarr(char **arr)
 	if (!arr)
 		return ;
 	i = 0;
-	while (arr[i])
+	while ((arr[i]))
 		free(arr[i++]);
 	free(arr);
 	arr = NULL;
