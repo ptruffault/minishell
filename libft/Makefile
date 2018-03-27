@@ -27,7 +27,7 @@ SRC20 =	  ./ft_str_startwith.c ./ft_strsplit_whitespace.c
 OBJ = $(SRC1:.c=.o) $(SRC2:.c=.o) $(SRC3:.c=.o) $(SRC4:.c=.o) $(SRC5:.c=.o) $(SRC6:.c=.o) \
  $(SRC7:.c=.o) $(SRC8:.c=.o) $(SRC9:.c=.o) $(SRC10:.c=.o) $(SRC11:.c=.o) $(SRC12:.c=.o) \
  $(SRC13:.c=.o) $(SRC14:.c=.o) $(SRC15:.c=.o) $(SRC16:.c=.o) $(SRC17:.c=.o) $(SRC18:.c=.o) \
- $(SRC19:.c=.o) $(SRC20:.c=.o)
+ $(SRC19:.c=.o) $(SRC20:.c=.o) $(SRC0:.c=.o)
 
 RM = rm -f
 
