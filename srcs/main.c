@@ -1,9 +1,26 @@
 #include "../includes/minishell.h"
 
-// builtin :    cd  echo setenv  unset_env
+void	init_tenvv(t_envv *envv, char **tab_envv)
+{
+	int i;
+	int len;
+	t_envv *tmp;
 
-
-// completion && UP 
+	i = 0;
+	tmp = envv;
+	len = ft_strarrlen(tab_envv);
+	while (i < len)
+	{
+		if (!(tmp->name = get_name(tab_envv[i])) 
+		|| !(tmp->value = get_value(tab_envv[i])))
+			return;
+		i++;
+		if (!(tmp->next = new_tenvv()))
+			return;
+		tmp = tmp->next;
+	}
+	tmp = NULL;
+}
 
 t_envv *read_cmd(t_envv *envv, char **input)
  {
@@ -28,13 +45,20 @@ t_envv *read_cmd(t_envv *envv, char **input)
 	return (envv);
  }
 
- int exit_shell(char *str)
+void	ft_disp(t_envv *envv, int argc, char **argv)
 {
-	ft_putendl_fd(str, 2);
-	ft_putendl_fd("exit minishell", 2);
-	return (0);
+	if (argc != 1)
+	{
+		ft_putstr(argv[1]);
+		ft_putchar('>');
+	}
+	else
+	{
+		ft_putstr("\033[1;32mminishell\033[00m:[\033[01;34m\033[04m");
+		ft_putstr(get_tenvv_val(envv, "PWD"));
+		ft_putendl("\033[00m]");
+	}
 }
-
 
 int main(int argc, char **argv, char **envv)
 {
@@ -42,8 +66,6 @@ int main(int argc, char **argv, char **envv)
 	char **input;
 	t_envv *my_envv;
 
-	if (argc != 1)
-		ft_putstr(argv[1]);
 	if (!(my_envv = new_tenvv()))
 	{
 		error("init envvironnement failure", "t_envv");
@@ -52,7 +74,7 @@ int main(int argc, char **argv, char **envv)
 	init_tenvv(my_envv, envv);
 	while(1)
 	{
-		ft_putstr("minishell> ");
+		ft_disp(my_envv, argc, argv);
 		if (!(tmp = ft_get_input()))
 			error("minishell : get_input failed", NULL);
 		else if (!(input = ft_init_input(my_envv, tmp)))

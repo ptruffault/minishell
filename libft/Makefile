@@ -16,13 +16,13 @@ SRC10 =	./ft_putnbr.c ./ft_putstr_fd.c ./ft_putstr.c ./ft_putstr_tab.c
 SRC11 = ./ft_strclr.c ./ft_strdel.c ./ft_strequ.c ./ft_striter.c 
 SRC12 =	./ft_striteri.c ./ft_strjoin.c ./ft_strmap.c ./ft_strmapi.c 
 SRC13 =	./ft_strnequ.c ./ft_strnew.c ./ft_strsplit.c ./ft_strsub.c 
-SRC14 =	./ft_strtrim.c ./ft_lstnew.c ./ft_lstdelone.c ./ft_lstdel.c 
+SRC14 =	./ft_strtrim.c ./ft_lstnew.c ./ft_lstdelone.c ./ft_lstdel.c ./ft_strarrlen.c
 SRC15 =	./ft_lstadd.c ./ft_lstiter.c ./ft_lstmap.c ./ft_sqrt.c ./get_next_line.c
 SRC16 =	./ft_realloc.c ./ft_get_input.c ./ft_new_path.c ./ft_get_tfile.c 
 SRC17 =	./ft_get_file_information.c ./ft_free_tfile.c ./ft_new_tfile.c 
 SRC18 =	./ft_dir_compltion.c ./ft_search_tfile.c ./ft_get_prev_path.c ./ft_strpull.c 
 SRC19 =	./ft_putstr_color_fd.c ./ft_sort_tfile.c ./ft_put_tfile.c ./ft_freestrarr.c 
-SRC20 =	./ft_str_startwith.c ./ft_strsplit_word.c ./ft_strncpy.c ./ft_strndup.c \
+SRC20 =	./ft_str_startwith.c ./ft_strsplit_word.c ./ft_strncpy.c ./ft_strndup.c 
 
 OBJ = $(SRC1:.c=.o) $(SRC2:.c=.o) $(SRC3:.c=.o) $(SRC4:.c=.o) $(SRC5:.c=.o) $(SRC6:.c=.o) \
  $(SRC7:.c=.o) $(SRC8:.c=.o) $(SRC9:.c=.o) $(SRC10:.c=.o) $(SRC11:.c=.o) $(SRC12:.c=.o) \

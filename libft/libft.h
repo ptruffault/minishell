@@ -92,6 +92,7 @@ void	*ft_realloc(void *ptr, size_t prev_size, size_t new_size);
 int		ft_str_startwith(char *s1, char *s2);
 char *ft_strpull(char *src, char *ptr, int len, char *value);
 char	*ft_strndup(char *src, int len);
+int ft_strarrlen(char **arr);
 
 t_list	*ft_lstnew(const void *content, size_t content_size);
 void	ft_lstiter(t_list *lst, void (*f)(t_list *elem));
