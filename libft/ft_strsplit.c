@@ -61,7 +61,7 @@ char		**ft_strsplit(char const *s, char c)
 	char	**new;
 	int		newindex;
 
-	if (!s || !(new = (char **)malloc(sizeof(char*) * ft_nw((char *)s, c) + 1)))
+	if (!s || !(new = (char **)malloc(sizeof(char*) * ft_nw((char *)s, c))))
 		return (NULL);
 	newindex = 0;
 	i = 0;

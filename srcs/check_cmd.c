@@ -1,48 +1,65 @@
 #include "../includes/minishell.h"
 
-static int check_builtin(char **input, char **envv)
+
+int		run_bin(char *path, char **args, t_envv *envv)
 {
-	if (ft_strequ(input[0], "exit"))
+	pid_t	pid;
+	char **arr;
+
+	if ((pid = fork()) == 0)
 	{
-		free(input[0]);
-		ft_putendl("\033[00;31mminishell stoped\033[00m");
-		exit(0);
+		if (!(arr = put_in_tab(envv)))
+		{
+			error("t_envv convertion **arr failed", NULL);
+			free(path);
+			return (-1); 
+		}
+		execve(path, args, arr);
 	}
-	else if (ft_strequ(input[0], "env"))
-		ft_putstr_tab(envv);
-	else
-		return (0);
+	else if (pid < 0)
+	{
+		error("Fork failed to create a new process", path);
+		free(path);
+		return (-1);
+	}
+	wait(&pid);
 	return (1);
 }
 
-static int		check_exe(char *bin_path, struct stat inf, char **envv, char **input)
+static char	*check_exe(char *bin_path, struct stat inf)
 {
 	if (inf.st_mode & S_IFREG)
 	{
 		if (inf.st_mode & S_IXUSR)
-			return (run_cmd(bin_path, envv, input));
+			return (bin_path);
 		else
 		{
-			ft_putstr("minishell: permission denied: ");
-			ft_putendl(bin_path);
+			error("permission denied", bin_path);
+			free(bin_path);
 		}
-		free(bin_path);
-		return (1);
+		return (NULL);
 	}
-	free(bin_path);
-	return (0);
+	else
+	{
+		error("not an executable", bin_path);
+		ft_putendl_fd(bin_path, 2);
+		free(bin_path);
+	}
+	return (NULL);
 }
 
-static int 	check_bin(char **input, char **envv)
+char *check_bin(char **input, t_envv *envv)
 {
 	int				i;
 	char			*bin_path;
 	char			**path;
 	struct stat		inf;
 
-	path = ft_strsplit(get_envv_var(envv, "PATH"), ':');
+	path = NULL;
+	if (!(path = ft_strsplit(get_tenvv_val(envv, "PATH"), ':')))
+		return (NULL);
 	i = 0;
-	while (path && path[i])
+	while (path[i])
 	{
 		if (ft_str_startwith(input[0], path[i]))
 			bin_path = ft_strdup(input[0]);
@@ -53,25 +70,11 @@ static int 	check_bin(char **input, char **envv)
 		else
 		{
 			ft_freestrarr(path);
-			return (check_exe(bin_path, inf, envv, input));
+			return (check_exe(bin_path, inf));
 		}
 		i++;
 	}
 	ft_freestrarr(path);
-	return (0);
+	return (NULL);
 }
 
-int check_cmd(char *str, char **envv)
-{
-	char **input;
-
-	if (!(input = ft_strsplit_whitespace(str)))
-	{
-		ft_putendl_fd("minishell : get_cmd failed", 2);
-		return (0);
-	}
-	ft_putstr_tab(input);
-	if (check_builtin(input, envv) == 0 && check_bin(input, envv) == 0)
-		return (0);
-	return (1);
-}
