@@ -8,7 +8,7 @@
 # include <stdlib.h>
 # include <signal.h>
 # include <dirent.h>
-# include "../libft/libft.h"
+# include "../libft/includes/libft.h"
 
 typedef struct s_envv	t_envv;
 struct s_envv
@@ -31,6 +31,7 @@ t_envv 	*ft_setenv(t_envv *envv, char *name, char *value);
 int 	ft_unsetenv(t_envv *envv, char *name);
 t_envv 	*get_tenvv(t_envv *envv, char *name);
 void	error(char *descrpt, char *name);
+void	ft_echo(char **input);
 void	ft_puttenvv(t_envv *envv);
 char 	**put_in_tab(t_envv *envv);
 void	del_tenvv(t_envv *envv);

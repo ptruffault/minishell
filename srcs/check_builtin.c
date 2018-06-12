@@ -81,7 +81,7 @@ t_envv *run_builtin(char **input, t_envv *envv)
 	else if (ft_strequ(input[0], "cd"))
 		ft_cd(input, envv);
 	else if (ft_strequ(input[0], "echo"))
-		ft_putstr_tab(&input[1]);
+		ft_echo(&input[1]);
 	else
 		return(change_envv(input, envv));
 	return (envv);

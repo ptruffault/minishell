@@ -77,14 +77,15 @@ int main(int argc, char **argv, char **envv)
 		ft_disp(my_envv, argc, argv);
 		if (!(tmp = ft_get_input()))
 			error("minishell : get_input failed", NULL);
-		else if (!(input = ft_init_input(my_envv, tmp)))
+		else if (tmp != NULL && !(input = ft_init_input(my_envv, tmp)))
 			error("minishell : impossible to parse  input", NULL);
-		if (!(my_envv = read_cmd(my_envv, input)))
+		else if (!(my_envv = read_cmd(my_envv, input)))
 		{
 			error("minishell : envvironnement reloading", NULL);
 			init_tenvv(my_envv, envv);
 		}
-		ft_freestrarr(input);
+		if (input)
+			ft_freestrarr(input);
 	}
 	return(0);
 }

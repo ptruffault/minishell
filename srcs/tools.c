@@ -1,18 +1,5 @@
 #include "../includes/minishell.h"
 
-void	error(char *descrpt, char *name)
-{
-	ft_putstr_fd("\033[00;31mminishell : \033[00m", 2);
-	ft_putstr_fd(descrpt, 2);
-	if (name)
-	{
-		ft_putstr_fd(" : '\033[1;32m", 2);
-		ft_putstr_fd(name, 2);
-		ft_putstr_fd("\033[00m'", 2);
-	}
-	ft_putchar_fd('\n', 2);
-}
-
 char *get_equal(char *name, char *value)
 {
 	char *tmp;

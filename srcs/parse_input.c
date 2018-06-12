@@ -14,8 +14,7 @@ static char *ft_putvar(t_envv *envv, char *input)
 	name = ft_strncpy(name, ptr + 2, (end - ptr) - 2);
 	if (!(value = get_tenvv_val(envv, name))) 
 	{
-		ft_putstr_fd("minishell: no such envv var:", 2);
-		ft_putendl_fd(name, 2);
+		error("no such var name", name);
 		free(name);
 		return (NULL);
 	}
