@@ -50,11 +50,7 @@ static t_envv *change_envv(char **input, t_envv *envv)
 {
 
 	if (ft_strequ(input[0], "unsetenv"))
-	{
-		if (ft_unsetenv(envv, input[1]) == 0)
-			error("no such envv var", input[1]);
-		return (envv);
-	}
+		return (ft_unsetenv(envv, input[1]));
 	else if (ft_strequ(input[0], "setenv") && (!(envv = ft_setenv(envv, input[1], input[2]))))
 	{ 
 		error("impossible to create", input[1]);
@@ -77,7 +73,7 @@ t_envv *run_builtin(char **input, t_envv *envv)
 	else if (ft_strequ(input[0], "env"))
 		ft_puttenvv(envv);
 	else if (ft_strequ(input[0], "pwd"))
-		ft_putendl(get_tenvv_val(envv, "PWD"));
+		ft_pwd(envv);
 	else if (ft_strequ(input[0], "cd"))
 		ft_cd(input, envv);
 	else if (ft_strequ(input[0], "echo"))

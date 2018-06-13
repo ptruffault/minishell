@@ -42,10 +42,24 @@ static char	*check_exe(char *bin_path, struct stat inf)
 	else
 	{
 		error("not an executable", bin_path);
-		ft_putendl_fd(bin_path, 2);
 		free(bin_path);
 	}
 	return (NULL);
+}
+
+char *local_try(char **input, t_envv *envv)
+{
+	char *path;
+	struct stat		inf;
+
+	path = ft_new_path(get_tenvv_val(envv, "PWD"), input[0]);
+	if (lstat(path, &inf) == -1)
+	{
+		ft_strdel(&path);
+		return (NULL);
+	}
+	else
+		return (check_exe(path, inf));
 }
 
 char *check_bin(char **input, t_envv *envv)
@@ -56,6 +70,8 @@ char *check_bin(char **input, t_envv *envv)
 	struct stat		inf;
 
 	path = NULL;
+	if ((bin_path = local_try(input, envv)))
+		return (bin_path);
 	if (!(path = ft_strsplit(get_tenvv_val(envv, "PATH"), ':')))
 		return (NULL);
 	i = 0;

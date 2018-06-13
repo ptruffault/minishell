@@ -14,11 +14,11 @@ static void			change_dir(char *path, t_envv *envv)
 	else
 	{
 		if (access(path, F_OK) == -1)
-			error("cd : no such file or directory: ", NULL);
+			error("no such file or directory: ", path);
 		else if (access(path, R_OK) == -1)
-			error("cd : permission denied: ", NULL);
+			error("permission denied: ", path);
 		else
-			error("cd : not a directory: ", NULL);
+			error("not a directory: ", path);
 		ft_putendl(path);
 	}
 }
@@ -27,28 +27,38 @@ void	ft_cd(char **input, t_envv *envv)
 {
 	if (!(input[1]))
 		change_dir(get_tenvv_val(envv, "HOME"), envv);
+	else if (input[1][0] == '-' && input[1][1] == '\0')
+		change_dir(get_tenvv_val(envv, "OLDPWD"), envv);
 	else if (input[1])
 		change_dir(input[1], envv);
 }
 
-int	ft_unsetenv(t_envv *envv, char *name)
+t_envv	*ft_unsetenv(t_envv *envv, char *name)
 {
+	t_envv *tmp;
 	t_envv *prev;
 
-	prev = NULL;
-	while (envv)
+	tmp = envv->next;
+	prev = envv;
+	if (ft_strequ(envv->name, name))
 	{
-		if (ft_strequ(envv->name, name))
-		{
-			if (prev != NULL)
-				prev->next = envv->next;
-			del_tenvv(envv);
-			return (1);
-		}
-		prev = envv;
-		envv = envv->next;
+		tmp = envv->next;
+		del_tenvv(envv);
+		return (tmp);
 	}
-	return (0);
+	while(tmp)
+	{
+		if (ft_strequ(tmp->name, name))
+		{
+			prev->next = tmp->next;
+			del_tenvv(tmp);
+			return (envv);
+		}
+		prev = tmp;
+		tmp = tmp->next;
+	}
+	error("no such ENV-VAR", name);
+	return (envv);
 }
 
 t_envv	*ft_setenv(t_envv *envv, char *name, char *value)
@@ -80,5 +90,12 @@ void	ft_echo(char **input)
 		ft_putstr(input[i++]);
 		ft_putchar('\t');
 	}
+	ft_putchar('\n');
+}
+
+void	ft_pwd(t_envv *e)
+{
+	ft_putstr("\033[1;32m\033[04m\nPrint Working Directory:\033[00m\n");
+	ft_putendl(get_tenvv_val(e, "PWD"));
 	ft_putchar('\n');
 }

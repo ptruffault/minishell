@@ -44,7 +44,10 @@ static char **ft_corect(t_envv *envv, char **input)
 			(end = ft_strchr(&input[i][j + 3], ')')))
 			{
 				if (!(tmp = ft_putvar(envv, input[i])))
+				{
+					ft_freestrarr(input);
 					return (NULL);
+				}
 				j = j + (ft_strlen(tmp) - ft_strlen(input[i]));
 				ft_strdel(&input[i]);
 				input[i] = ft_strdup(tmp);
@@ -57,19 +60,31 @@ static char **ft_corect(t_envv *envv, char **input)
 	return (input);
 }
 
+int 	check_void_input(char *s)
+{
+	int i;
+
+	i = 0;
+	if (!s)
+		return (1);
+	while (s[i])
+		if (!IS_SPACE(s[i++]))
+			return (0);
+	return (1);
+}
+
 char **ft_init_input(t_envv *envv, char *input)
 {
 	char **tmp;
-	char **ret;
 
-	if (!(tmp = ft_strsplit_word(input))
-	|| !(ret = ft_corect(envv, tmp)))
+	if (check_void_input(input))
+		return (NULL);
+	if (!(tmp = ft_corect(envv, ft_strsplit_word(input))))
 	{
 		free(input);
-		if (tmp)
-			ft_freestrarr(tmp);
+		error("impossible to parse  input", NULL);
 		return (NULL);
 	}
 	free(input);
-	return (ret);
+	return (tmp);
 }

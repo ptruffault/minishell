@@ -6,16 +6,12 @@ char *get_equal(char *name, char *value)
 	char *ret;
 
 	if (!(tmp = ft_strnew(ft_strlen(name) + 2)))
-	{
-		error("get_equal , allocation failed", NULL);
 		return (NULL);
-	}
 	tmp = ft_strcpy(tmp, name);
 	tmp[ft_strlen(name)] = '=';
 	tmp[ft_strlen(name) + 1] = '\0';
 	if (!(ret = ft_strjoin(tmp, value)))
 	{
-		error("get_equal , ft_strjoin failed", NULL);
 		free(tmp);
 		return (NULL);
 	}

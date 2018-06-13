@@ -9,110 +9,77 @@
 #    Updated: 2018/01/07 16:59:07 by ptruffau         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-
 NAME		= minishell
-
-FOLDERS 	= minishell/
-			
 GIT 		= https://github.com/ptruffault/minishell.git
 
-SRC			= srcs/*.c
+FLAG		= -Wall -Wextra -Werror
 
-CFLAGS		= -Wall -Werror -Wextra
+FILES		= builtins.c \
+		check_builtin.c \
+		check_cmd.c \
+		main.c \
+		parse_input.c \
+		tenvv_tools_2.c \
+		tenvv_tools.c \
+		tools.c
 
-LIB_PATH	= ./libft/
+FILE_FOLDER	= ./srcs/
+OBJ_FOLDER 	= ./bin/
+SRC			= $(addprefix $(FILE_FOLDER), $(FILES)) 
+OBJ			= $(addprefix $(OBJ_FOLDER), $(FILES:.c=.o))
 
-LIB			= -Llibft/ -lft
+COLOR		= \033[01;34m
+NO_COLOR	= \033[00m
+OP_COLOR	= \033[1;31m
+DONE 		= $(NO_COLOR)[\033[1;32mOK$(NO_COLOR)]
 
-COULEUR		= \033[01;34m
+all: bin $(NAME)
 
-SUCESS		= [\033[1;32mOK\033[00m]
+$(NAME): $(OBJ)
+	@make -C libft all
+	@echo "$(OP_COLOR) building $(NAME)$(NO_COLOR)"
+	@gcc $(OBJ) -I includes/ -Llibft -lft -o $(NAME)
+	@echo "$(DONE)"
 
-all: $(NAME)
+bin:
+	@mkdir $@
+
+bin/%.o: srcs/%.c 
+	@gcc $(FLAG) -I includes/ -c $< -o $@
+	@echo "$(COLOR)$< : $(DONE)"
+
+bin/%.o: srcs/tools/%.c
+	@gcc $(FLAG) -I includes/ -c $< -o $@		
+	@echo "$(COLOR)$< : $(DONE)"
 
 clear:
 	@clear
 
-$(NAME):
-	@echo "$(COULEUR) -Creating libft.a \033[00m"
-	@make -C $(LIB_PATH) all
-	@echo "$(SUCESS)"
-	@echo "$(COULEUR) -Creating $(NAME) \033[00m"
-	@gcc $(CFLAGS) $(SRC) -I $(LIB_PATH) $(LIB) -o $(NAME)
-	@echo "$(SUCESS)"
-
-small_clean:
-	@rm -rf $(NAME)
-	@echo "$(COULEUR) -delete $(NAME) \033[00m"
-
 clean:
-	@make -C $(LIB_PATH) clean
+	@rm -rf $(OBJ) $(OBJ_FOLDER)$(NAME).a
+	@rm -rf $(NAME)
 
-fclean:
-	@echo "$(COULEUR) -Cleaning\033[00m"
-	@make -C $(LIB_PATH) fclean
-	@echo "$(COULEUR)\t +delete $(NAME) \033[00m"
-	@rm -f $(NAME)
-	@echo "$(SUCESS)"
+fclean: clean
+	@make -C libft fclean
 
-re:	clear fclean all
+re: clear clean all
 
-fast_re: clear small_clean
-	@echo "$(COULEUR) -Creating $(NAME) \033[00m"
-	@gcc $(CFLAGS) $(SRC) -I $(LIB_PATH) $(LIB) -o $(NAME)
-	@echo "$(SUCESS)"
-
-
-no_flag: clear small_clean
-	@echo "$(COULEUR) -Creating $(NAME) \033[00m"
-	@gcc $(SRC) -I $(LIB_PATH) $(LIB) -o $(NAME)
-	@echo "$(SUCESS)"
-
-build:
-	@rm -rf *
-	@git clone https://github.com/ptruffault/libft.git
-	@mkdir srcs
-	@mkdir includes
-	@mkdir user
-	@touch user/cmd_logs
-	@echo ptruffau > auteur
-	@echo "$(SUCESS)"
-
-chmod:
-	@echo "$(COULEUR) -giving permission\033[00m"
-	@chmod 777 *
-	@chmod 777 libft/*
-	@chmod 777 srcs/*
-	@chmod 777 includes/*
-	@echo "$(SUCESS)"
-
-valgrind:fast_re
-	@echo "$(COULEUR) -test leaks with valgrind \033[00m"
-	@valgrind --tool=memcheck --leak-check=full ./$(NAME)
-
-tmp:
-	@make -C $(LIB_PATH) last
-	@make fast_re
-
-zam: fast_re
+exe: re
 	./$(NAME)
 
+chmod:
+	@chmod 777 * $(SRC) includes/$(NAME).h 
+	@make -C ./libft chmod
+
 save: clear fclean
-	@git add *
-	@git commit -m "make save"
+	@git add * srcs/* includes/*
+	@git commit -m  "make save"
 	@git push
+	@echo "$(DONE)"
 
-load: clear fclean
-	@rm -rf srcs
-	@rm -rf includes
-	@rm -rf libft
-	@rm -rf auteur
-	@git clone $(GIT)
-	@cp -r $(FOLDERS)srcs .
-	@cp -r $(FOLDERS)includes .
-	@cp -r $(FOLDERS)libft .
-	@cp $(FOLDERS)auteur .
-	@rm -rf $(FOLDERS)
-	@echo "$(SUCESS)"
-
-.PHONY: all small_clean clean fclean re fast_re
+load:
+	@rm -rf *
+	@echo "$(COLOR)download $(NAME) from github$(NO_COLOR)"
+	@git clone $(GIT) TMP && mv TMP/* . && rm -rf TMP libft
+	@echo "$(COLOR)download libft from github$(NO_COLOR)"
+	@git clone https://github.com/ptruffault/libft.git
