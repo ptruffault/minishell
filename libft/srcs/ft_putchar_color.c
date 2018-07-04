@@ -1,42 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlcat.c                                       :+:      :+:    :+:   */
+/*   ft_putchar_color_fd.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ptruffau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/16 10:59:31 by ptruffau          #+#    #+#             */
-/*   Updated: 2017/11/16 10:59:43 by ptruffau         ###   ########.fr       */
+/*   Created: 2018/06/08 16:33:25 by ptruffau          #+#    #+#             */
+/*   Updated: 2018/06/08 16:34:15 by ptruffau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libft.h"
 
-size_t	ft_strlcat(char *dst, const char *src, size_t size)
+void	ft_putchar_color_fd(char c, char *color, int fd)
 {
-	size_t	dest;
-	size_t	source;
+	ft_putstr_fd(color, fd);
+	ft_putchar_fd(c, fd);
+	ft_putstr_fd(NORMAL, fd);
+}
 
-	dest = 0;
-	source = 0;
-	while (size != 0 && *(dst + dest) != '\0')
-	{
-		dest++;
-		size--;
-	}
-	if (size == 0)
-		return (dest + ft_strlen(src));
-	while (*src != '\0')
-	{
-		if (size != 1)
-		{
-			*(dst + dest) = *src;
-			dst++;
-			size--;
-		}
-		src++;
-		source++;
-	}
-	*(dst + dest) = '\0';
-	return (dest + source);
+void	ft_putchar_color(char c, char *color)
+{
+	ft_putchar_color_fd(c, color, 1);
 }

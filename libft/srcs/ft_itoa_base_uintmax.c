@@ -1,32 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strmapi.c                                       :+:      :+:    :+:   */
+/*   ft_itoa_base_uintmax.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ptruffau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/16 11:00:17 by ptruffau          #+#    #+#             */
-/*   Updated: 2017/11/16 11:00:19 by ptruffau         ###   ########.fr       */
+/*   Created: 2018/06/21 14:41:39 by ptruffau          #+#    #+#             */
+/*   Updated: 2018/06/21 14:41:43 by ptruffau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libft.h"
 
-char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
+static void	f(uintmax_t value, unsigned int base, char *str, int *i)
+{
+	char	*tmp;
+
+	tmp = "0123456789abcdef";
+	if (value >= base)
+		f(value / base, base, str, i);
+	str[*i] = tmp[value % base];
+	(*i)++;
+}
+
+char		*ft_itoa_base_u(uintmax_t value, int base)
 {
 	int		i;
-	char	*new;
+	char	*str;
 
-	if (s == NULL || f == NULL)
-		return (NULL);
-	new = ft_memalloc(ft_strlen(s) + 1);
-	if (new == NULL)
-		return (NULL);
 	i = 0;
-	while (s[i])
-	{
-		new[i] = f(i, s[i]);
-		i++;
-	}
-	return (new);
+	if (base < 2 || base > 16)
+		return (NULL);
+	if (value == 0)
+		return (ft_strdup("0"));
+	if (value == 1)
+		return (ft_strdup("1"));
+	if (!(str = (char*)malloc(32)))
+		return (NULL);
+	f(value, base, str, &i);
+	str[i] = '\0';
+	return (str);
 }

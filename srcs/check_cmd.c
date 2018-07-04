@@ -1,10 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_cmd.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ptruffau <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/07/04 14:13:54 by ptruffau          #+#    #+#             */
+/*   Updated: 2018/07/04 14:13:55 by ptruffau         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
-
-int		run_bin(char *path, char **args, t_envv *envv)
+int			run_bin(char *path, char **args, t_envv *envv)
 {
 	pid_t	pid;
-	char **arr;
+	char	**arr;
 
 	if ((pid = fork()) == 0)
 	{
@@ -12,7 +23,7 @@ int		run_bin(char *path, char **args, t_envv *envv)
 		{
 			error("t_envv convertion **arr failed", NULL);
 			free(path);
-			return (-1); 
+			return (-1);
 		}
 		execve(path, args, arr);
 	}
@@ -47,10 +58,10 @@ static char	*check_exe(char *bin_path, struct stat inf)
 	return (NULL);
 }
 
-char *local_try(char **input, t_envv *envv)
+char		*local_try(char **input, t_envv *envv)
 {
-	char *path;
-	struct stat		inf;
+	char		*path;
+	struct stat	inf;
 
 	path = ft_new_path(get_tenvv_val(envv, "PWD"), input[0]);
 	if (lstat(path, &inf) == -1)
@@ -62,18 +73,12 @@ char *local_try(char **input, t_envv *envv)
 		return (check_exe(path, inf));
 }
 
-char *check_bin(char **input, t_envv *envv)
+static char	*check_path(char **input, char **path)
 {
-	int				i;
-	char			*bin_path;
-	char			**path;
-	struct stat		inf;
+	int			i;
+	char		*bin_path;
+	struct stat	inf;
 
-	path = NULL;
-	if ((bin_path = local_try(input, envv)))
-		return (bin_path);
-	if (!(path = ft_strsplit(get_tenvv_val(envv, "PATH"), ':')))
-		return (NULL);
 	i = 0;
 	while (path[i])
 	{
@@ -94,3 +99,15 @@ char *check_bin(char **input, t_envv *envv)
 	return (NULL);
 }
 
+char		*check_bin(char **input, t_envv *envv)
+{
+	char			*bin_path;
+	char			**path;
+
+	path = NULL;
+	if ((bin_path = local_try(input, envv)))
+		return (bin_path);
+	if (!(path = ft_strsplit(get_tenvv_val(envv, "PATH"), ':')))
+		return (NULL);
+	return (check_path(input, path));
+}

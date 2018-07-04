@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tenvv_tools_2.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ptruffau <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/07/04 14:11:52 by ptruffau          #+#    #+#             */
+/*   Updated: 2018/07/04 14:11:54 by ptruffau         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 t_envv	*new_tenvv(void)
@@ -5,9 +17,9 @@ t_envv	*new_tenvv(void)
 	t_envv *new;
 
 	if (!(new = (t_envv *)malloc(sizeof(t_envv))))
-		return(NULL);
+		return (NULL);
 	new->next = NULL;
-	new->name =NULL;
+	new->name = NULL;
 	new->value = NULL;
 	return (new);
 }
@@ -24,7 +36,7 @@ void	ft_free_tenvv(t_envv *envv)
 {
 	t_envv *tmp;
 
-	while(envv)
+	while (envv)
 	{
 		tmp = envv;
 		envv = envv->next;
@@ -32,12 +44,12 @@ void	ft_free_tenvv(t_envv *envv)
 	}
 }
 
-char **put_in_tab(t_envv *envv)
+char	**put_in_tab(t_envv *envv)
 {
-	char **tab;
-	t_envv *tmp;
-	int i;
-	int len;
+	char	**tab;
+	t_envv	*tmp;
+	int		i;
+	int		len;
 
 	i = 0;
 	tmp = envv;

@@ -9,6 +9,7 @@
 #    Updated: 2018/01/07 16:59:07 by ptruffau         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
 NAME		= minishell
 GIT 		= https://github.com/ptruffault/minishell.git
 
@@ -16,6 +17,7 @@ FLAG		= -Wall -Wextra -Werror
 
 FILES		= builtins.c \
 		check_builtin.c \
+		builtin_2.c \
 		check_cmd.c \
 		main.c \
 		parse_input.c \

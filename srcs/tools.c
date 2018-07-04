@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tools.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ptruffau <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/07/04 14:12:02 by ptruffau          #+#    #+#             */
+/*   Updated: 2018/07/04 14:12:03 by ptruffau         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
-char *get_equal(char *name, char *value)
+char	*get_equal(char *name, char *value)
 {
 	char *tmp;
 	char *ret;
@@ -19,16 +31,16 @@ char *get_equal(char *name, char *value)
 	return (ret);
 }
 
-char *get_name(char *equal)
+char	*get_name(char *equal)
 {
-	int i;
-	char *name;
-	
+	int		i;
+	char	*name;
+
 	i = 0;
 	while (equal[i] != '=')
 	{
 		if (equal[i++] == '\0')
-			return(NULL);
+			return (NULL);
 	}
 	if (!(name = ft_strnew(i)))
 		return (NULL);
@@ -37,7 +49,7 @@ char *get_name(char *equal)
 	return (name);
 }
 
-char *get_value(char *equal)
+char	*get_value(char *equal)
 {
 	char *ptr;
 	char *value;

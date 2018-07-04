@@ -12,7 +12,7 @@
 
 #include "../includes/libft.h"
 
-char *ft_get_prev_path(char *path)
+char	*ft_get_prev_path(char *path)
 {
 	char *new;
 	char *ptr;

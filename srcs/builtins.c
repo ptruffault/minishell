@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtins.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ptruffau <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/07/04 14:10:52 by ptruffau          #+#    #+#             */
+/*   Updated: 2018/07/04 14:10:54 by ptruffau         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
-static void			change_dir(char *path, t_envv *envv)
+static void	change_dir(char *path, t_envv *envv)
 {
 	char	*cwd;
 	char	buff[4097];
@@ -23,7 +35,7 @@ static void			change_dir(char *path, t_envv *envv)
 	}
 }
 
-void	ft_cd(char **input, t_envv *envv)
+void		ft_cd(char **input, t_envv *envv)
 {
 	if (!(input[1]))
 		change_dir(get_tenvv_val(envv, "HOME"), envv);
@@ -33,7 +45,7 @@ void	ft_cd(char **input, t_envv *envv)
 		change_dir(input[1], envv);
 }
 
-t_envv	*ft_unsetenv(t_envv *envv, char *name)
+t_envv		*ft_unsetenv(t_envv *envv, char *name)
 {
 	t_envv *tmp;
 	t_envv *prev;
@@ -46,7 +58,7 @@ t_envv	*ft_unsetenv(t_envv *envv, char *name)
 		del_tenvv(envv);
 		return (tmp);
 	}
-	while(tmp)
+	while (tmp)
 	{
 		if (ft_strequ(tmp->name, name))
 		{
@@ -61,7 +73,7 @@ t_envv	*ft_unsetenv(t_envv *envv, char *name)
 	return (envv);
 }
 
-t_envv	*ft_setenv(t_envv *envv, char *name, char *value)
+t_envv		*ft_setenv(t_envv *envv, char *name, char *value)
 {
 	t_envv *new;
 	t_envv *tmp;
@@ -73,29 +85,9 @@ t_envv	*ft_setenv(t_envv *envv, char *name, char *value)
 		return (envv);
 	}
 	if (!(new = new_tenvv())
-	|| !(new->name = ft_strdup(name)) 
+	|| !(new->name = ft_strdup(name))
 	|| !(new->value = ft_strdup(value)))
 		return (NULL);
 	new->next = envv;
 	return (new);
-}
-
-void	ft_echo(char **input)
-{
-	int i;
-
-	i = 0;
-	while (input[i])
-	{
-		ft_putstr(input[i++]);
-		ft_putchar('\t');
-	}
-	ft_putchar('\n');
-}
-
-void	ft_pwd(t_envv *e)
-{
-	ft_putstr("\033[1;32m\033[04m\nPrint Working Directory:\033[00m\n");
-	ft_putendl(get_tenvv_val(e, "PWD"));
-	ft_putchar('\n');
 }

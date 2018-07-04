@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strsplit_word.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ptruffau <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/06/21 14:10:22 by ptruffau          #+#    #+#             */
+/*   Updated: 2018/06/21 14:10:26 by ptruffau         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/libft.h"
 
-static int	ft_is_quote(char *str)
+static int		ft_is_quote(char *str)
 {
 	char *ptr;
 
@@ -13,7 +25,7 @@ static int	ft_is_quote(char *str)
 	return (0);
 }
 
-static int word_len(char *str)
+static int		word_len(char *str)
 {
 	int ret;
 	int i;
@@ -22,8 +34,7 @@ static int word_len(char *str)
 	i = 0;
 	if (ret == -1)
 	{
-		ft_putendl_fd("minishell : invalid quote : missing end symbol  :", 2);
-		ft_putendl_fd(str, 2);
+		error(" invalid quote : missing end symbol", str);
 		return (-1);
 	}
 	if (ret == 0)
@@ -37,37 +48,38 @@ static int word_len(char *str)
 	return (-1);
 }
 
-static int	ft_nb_w(char *str)
+static char		**init_tab(char *s)
 {
-	int i;
-	int n;
-	char *ptr;
+	int		i;
+	int		n;
+	char	*ptr;
 
 	i = 0;
 	n = 0;
-	while (str[i] != '\0')
+	while (s[i] != '\0')
 	{
-		if (!(IS_SPACE(str[i])))
+		if (!(IS_SPACE(s[i])))
 		{
-			if ((str[i] == '"' || str[i] == '\'') && (ptr = ft_strchr(&str[i + 1], str[i])))
-				i = i + (ptr - &str[i]);
+			if ((s[i] == '"' || s[i] == '\'')
+			&& (ptr = ft_strchr(&s[i + 1], s[i])))
+				i = i + (ptr - &s[i]);
 			else
 			{
-				while (!(IS_SPACE(str[i])) && str[i] != '\0')
+				while (!(IS_SPACE(s[i])) && s[i] != '\0')
 					i++;
 			}
 			n++;
 		}
-		if (str[i] != '\0')
+		if (s[i] != '\0')
 			i++;
 	}
-	return (n);
+	return ((char **)malloc(sizeof(char *) * (n + 1)));
 }
 
-static char	*get_next_word(char *str)
+static char		*get_next_word(char *str)
 {
-	char *word;
-	int len;
+	char	*word;
+	int		len;
 
 	if ((len = word_len(str)) == -1)
 		return (NULL);
@@ -75,22 +87,18 @@ static char	*get_next_word(char *str)
 		return (NULL);
 	if (ft_is_quote(str))
 		word = ft_strncpy(word, str + 1, len);
-	else 
+	else
 		word = ft_strncpy(word, str, len);
 	return (word);
 }
 
-
-char **ft_strsplit_word(char *str)
+char			**ft_strsplit_word(char *str)
 {
-	char **tab;
-	int len;
-	int k;
-	int i;
+	char	**tab;
+	int		k;
+	int		i;
 
-	if ((len = ft_nb_w(str)) <= 0)
-		return (NULL);
-	if (!(tab = (char **)malloc(sizeof(char *) * (len + 1))))
+	if (!(tab = init_tab(str)))
 		return (NULL);
 	k = 0;
 	i = 0;

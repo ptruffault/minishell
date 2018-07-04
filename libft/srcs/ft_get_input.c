@@ -1,14 +1,26 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_get_input.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ptruffau <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/06/21 14:49:50 by ptruffau          #+#    #+#             */
+/*   Updated: 2018/06/21 14:50:01 by ptruffau         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
-char *ft_get_input(void)
+char	*ft_get_input(void)
 {
-	char *input;
+	char	*input;
 	int		ret;
 	char	buf;
 	int		i;
 	int		count;
 
-	if(!(input = ft_strnew(1)))
+	if (!(input = ft_strnew(1)))
 		return (NULL);
 	count = 1;
 	i = 0;
@@ -26,4 +38,3 @@ char *ft_get_input(void)
 	}
 	return (input);
 }
-	

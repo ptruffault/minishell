@@ -12,34 +12,35 @@
 
 #include "../includes/libft.h"
 
-static void read_all_dir(t_file *file, char *path, DIR *dir, int recursive)
+static void	read_all_dir(t_file *f, char *path, DIR *dir, int recursive)
 {
 	struct dirent *t_dir;
 
 	while ((t_dir = readdir(dir)))
 	{
-		file->next = ft_new_tfile();
-		file = file->next;
-		ft_get_file_information(file, t_dir, path);
-		if (recursive != 0 && file->type == 'd' && 
-			ft_strcmp(file->name, ".") != 0  && ft_strcmp(file->name, "..") != 0)
-			file->sdir = ft_get_tfile(file->path, recursive);
+		f->next = ft_new_tfile();
+		f = f->next;
+		ft_get_file_inf(f, t_dir, path);
+		if (recursive != 0 && f->type == 'd' &&
+		ft_strcmp(f->name, ".") != 0 && ft_strcmp(f->name, "..") != 0)
+			f->sdir = ft_get_tfile(f->path, recursive);
 	}
 }
 
-t_file	*ft_get_tfile(char *path, int recursive)
+t_file		*ft_get_tfile(char *path, int recursive)
 {
-	t_file *file;
-	t_file *tmp;
-	DIR *dir;
+	t_file	*file;
+	t_file	*tmp;
+	DIR		*dir;
 
 	file = ft_new_tfile();
 	if (!(dir = opendir(path)))
 	{
+		ft_putstr("\033[00;31m\033[04mError:\033[00m");
 		perror(path);
 		return (NULL);
 	}
-	else if ((path)) 
+	else if ((path))
 		read_all_dir(file, path, dir, recursive);
 	tmp = file->next;
 	free(file);

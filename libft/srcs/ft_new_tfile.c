@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ptruffau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/06/08 16:36:20 by ptruffau          #+#    #+#             */
-/*   Updated: 2018/06/08 16:37:16 by ptruffau         ###   ########.fr       */
+/*   Created: 2018/06/21 14:32:37 by ptruffau          #+#    #+#             */
+/*   Updated: 2018/06/21 14:32:46 by ptruffau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,10 @@
 
 t_file		*ft_new_tfile(void)
 {
-	
 	t_file *new;
 
 	new = NULL;
-	if (!(new =  (t_file *)malloc(sizeof(t_file))))
+	if (!(new = (t_file *)malloc(sizeof(t_file))))
 	{
 		ft_putendl_fd("ft_new_tfile : allocation failed", 2);
 		exit(-1);

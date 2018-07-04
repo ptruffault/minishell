@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tenvv_tools.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ptruffau <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/07/04 14:11:41 by ptruffau          #+#    #+#             */
+/*   Updated: 2018/07/04 14:11:42 by ptruffau         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
-t_envv *get_tenvv(t_envv *envv, char *name)
+t_envv	*get_tenvv(t_envv *envv, char *name)
 {
 	t_envv *tmp;
 
@@ -14,7 +26,7 @@ t_envv *get_tenvv(t_envv *envv, char *name)
 	return (NULL);
 }
 
-char *get_tenvv_val(t_envv *envv, char *name)
+char	*get_tenvv_val(t_envv *envv, char *name)
 {
 	while (envv)
 	{
@@ -25,10 +37,10 @@ char *get_tenvv_val(t_envv *envv, char *name)
 	return (NULL);
 }
 
-int envv_len(t_envv *envv)
+int		envv_len(t_envv *envv)
 {
-	t_envv *tmp;
-	int i;
+	t_envv	*tmp;
+	int		i;
 
 	i = 0;
 	tmp = envv;
@@ -55,7 +67,7 @@ void	ft_puttenvv(t_envv *envv)
 	}
 }
 
-t_envv *ft_changetenvv_val(t_envv *envv, char *name, char *new_val)
+t_envv	*ft_changetenvv_val(t_envv *envv, char *name, char *new_val)
 {
 	t_envv *tmp;
 

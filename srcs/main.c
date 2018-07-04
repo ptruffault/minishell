@@ -1,34 +1,46 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ptruffau <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/07/04 14:11:06 by ptruffau          #+#    #+#             */
+/*   Updated: 2018/07/04 14:11:07 by ptruffau         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 void	init_tenvv(t_envv *envv, char **tab_envv)
 {
-	int i;
-	int len;
-	t_envv *tmp;
+	int		i;
+	int		len;
+	t_envv	*tmp;
 
 	i = 0;
 	tmp = envv;
 	len = ft_strarrlen(tab_envv);
 	while (i < len)
 	{
-		if (!(tmp->name = get_name(tab_envv[i])) 
+		if (!(tmp->name = get_name(tab_envv[i]))
 		|| !(tmp->value = get_value(tab_envv[i])))
-			return;
+			return ;
 		i++;
 		if (!(tmp->next = new_tenvv()))
-			return;
+			return ;
 		tmp = tmp->next;
 	}
 	tmp = NULL;
 }
 
-t_envv *read_cmd(t_envv *envv, char **input)
- {
- 	int inf;
- 	t_envv *tmp;
- 	char *bin_path;
+t_envv	*read_cmd(t_envv *envv, char **input)
+{
+	int		inf;
+	t_envv	*tmp;
+	char	*bin_path;
 
- 	inf = check_builtin(input);
+	inf = check_builtin(input);
 	if (inf == 1)
 	{
 		if (!(tmp = run_builtin(input, envv)))
@@ -37,13 +49,14 @@ t_envv *read_cmd(t_envv *envv, char **input)
 	}
 	else if (inf == 0)
 	{
-		if ((bin_path = check_bin(input, envv)) && (run_bin(bin_path, input, envv) > 0))
+		if ((bin_path = check_bin(input, envv))
+		&& (run_bin(bin_path, input, envv) > 0))
 			free(bin_path);
 		else if (!bin_path)
 			error("command not found", NULL);
 	}
 	return (envv);
- }
+}
 
 void	ft_disp(t_envv *envv, int argc, char **argv)
 {
@@ -60,11 +73,11 @@ void	ft_disp(t_envv *envv, int argc, char **argv)
 	}
 }
 
-int main(int argc, char **argv, char **envv)
+int		main(int argc, char **argv, char **envv)
 {
-	char *tmp;
-	char **input;
-	t_envv *my_envv;
+	char	*tmp;
+	char	**input;
+	t_envv	*my_envv;
 
 	if (!(my_envv = new_tenvv()))
 	{
@@ -72,7 +85,7 @@ int main(int argc, char **argv, char **envv)
 		return (-1);
 	}
 	init_tenvv(my_envv, envv);
-	while(1)
+	while (1)
 	{
 		ft_disp(my_envv, argc, argv);
 		if (!(tmp = ft_get_input()))
@@ -86,5 +99,5 @@ int main(int argc, char **argv, char **envv)
 		if (input)
 			ft_freestrarr(input);
 	}
-	return(0);
+	return (0);
 }
