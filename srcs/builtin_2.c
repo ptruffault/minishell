@@ -24,3 +24,21 @@ void	ft_echo(char **input)
 	}
 	ft_putchar('\n');
 }
+
+void	ft_env(char **input, t_envv *envv)
+{
+	if (!inpu[1])
+		ft_puttenvv(envv);
+	else if (input[1][0] == '-')
+	{
+		if (input[1][1] == 'u')
+		{
+			if (!input[2])
+				warning("need a var name as argument", NULL);
+			else
+				ft_unsetenvv(envv, input[2]);
+		}
+		if (
+
+	}
+}
