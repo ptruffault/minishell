@@ -66,7 +66,6 @@ static char	**ft_corect(t_envv *envv, char **input)
 					ft_freestrarr(input);
 					return (NULL);
 				}
-			
 				ft_norme(tmp, input, i, &j);
 			}
 		}

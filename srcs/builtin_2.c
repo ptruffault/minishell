@@ -24,10 +24,3 @@ void	ft_echo(char **input)
 	}
 	ft_putchar('\n');
 }
-
-void	ft_pwd(t_envv *e)
-{
-	ft_putstr("\033[1;32m\033[04m\nPrint Working Directory:\033[00m\n");
-	ft_putendl(get_tenvv_val(e, "PWD"));
-	ft_putchar('\n');
-}

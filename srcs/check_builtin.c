@@ -81,7 +81,7 @@ t_envv			*run_builtin(char **input, t_envv *envv)
 	else if (ft_strequ(input[0], "env"))
 		ft_puttenvv(envv);
 	else if (ft_strequ(input[0], "pwd"))
-		ft_pwd(envv);
+		ft_putendl(get_tenvv_val(envv, "PWD"));
 	else if (ft_strequ(input[0], "cd"))
 		ft_cd(input, envv);
 	else if (ft_strequ(input[0], "echo"))
