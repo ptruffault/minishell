@@ -92,12 +92,8 @@ int		main(int argc, char **argv, char **envv)
 			error("get_input failed", NULL);
 		else if ((input = ft_init_input(my_envv, tmp)) &&
 			!(my_envv = read_cmd(my_envv, input)))
-		{
-			error("envvironnement reloading", NULL);
 			init_tenvv(my_envv, envv);
-		}
-		if (input)
-			ft_freestrarr(input);
+		ft_freestrarr(input);
 	}
 	return (0);
 }

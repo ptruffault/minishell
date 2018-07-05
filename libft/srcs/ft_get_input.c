@@ -20,7 +20,7 @@ char	*ft_get_input(void)
 	int		i;
 	int		count;
 
-	if (!(input = ft_strnew(1)))
+	if (!(input = ft_strnew(0)))
 		return (NULL);
 	count = 1;
 	i = 0;
@@ -31,9 +31,9 @@ char	*ft_get_input(void)
 		count++;
 	}
 	input[i] = '\0';
-	if (!ret)
+	if (ret == -1)
 	{
-		free(input);
+		ft_strdel(&input);
 		return (NULL);
 	}
 	return (input);

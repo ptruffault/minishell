@@ -40,9 +40,10 @@ void	ft_cd(char **input, t_envv *envv);
 t_envv	*ft_setenv(t_envv *envv, char *name, char *value);
 t_envv	*ft_unsetenv(t_envv *envv, char *name);
 t_envv	*get_tenvv(t_envv *envv, char *name);
+t_envv	*ft_tenvv_cpy(t_envv *src);
 void	error(char *descrpt, char *name);
 void	ft_echo(char **input);
-void	ft_puttenvv(t_envv *envv);
+void	ft_puttenvv(t_envv *envv, int a);
 char	**put_in_tab(t_envv *envv);
 void	del_tenvv(t_envv *envv);
 void	ft_free_tenvv(t_envv *envv);
@@ -53,5 +54,6 @@ char	*get_tenvv_val(t_envv *envv, char *name);
 char	*get_value(char *equal);
 char	*get_name(char *equal);
 char	*get_equal(char *name, char *value);
+t_envv	*ft_env(char **input, t_envv *envv);
 
 #endif

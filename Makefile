@@ -37,7 +37,7 @@ DONE 		= $(NO_COLOR)[\033[1;32mOK$(NO_COLOR)]
 
 all: bin $(NAME)
 
-$(NAME): $(OBJ)
+$(NAME): $(OBJ) Makefile includes/$(NAME).h
 	@make -C libft all
 	@echo "$(OP_COLOR) building $(NAME)$(NO_COLOR)"
 	@gcc $(OBJ) -I includes/ -Llibft -lft -o $(NAME)

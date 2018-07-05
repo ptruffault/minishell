@@ -91,13 +91,16 @@ char		**ft_init_input(t_envv *envv, char *input)
 	char **tmp;
 
 	if (check_void_input(input))
+	{
+		ft_strdel(&input);
 		return (NULL);
+	}
 	if (!(tmp = ft_corect(envv, ft_strsplit_word(input))))
 	{
-		free(input);
+		ft_strdel(&input);
 		error("impossible to parse  input", NULL);
 		return (NULL);
 	}
-	free(input);
+	ft_strdel(&input);
 	return (tmp);
 }

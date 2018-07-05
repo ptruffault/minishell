@@ -43,6 +43,8 @@ void		ft_cd(char **input, t_envv *envv)
 		change_dir(get_tenvv_val(envv, "OLDPWD"), envv);
 	else if (input[1])
 		change_dir(input[1], envv);
+	if (input[2] != NULL)
+		warning("useless arg", input[2]);
 }
 
 t_envv		*ft_unsetenv(t_envv *envv, char *name)
@@ -69,7 +71,7 @@ t_envv		*ft_unsetenv(t_envv *envv, char *name)
 		prev = tmp;
 		tmp = tmp->next;
 	}
-	error("no such ENV-VAR", name);
+	error("there is no such var name in env", name);
 	return (envv);
 }
 
