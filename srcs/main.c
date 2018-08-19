@@ -77,8 +77,9 @@ t_envv 	*get_cmd(t_envv *my_envv, char *input)
 {
  	char **cmd;
 
- 	if (!(cmd = ft_init_input(my_envv, input)) ||
-	!(my_envv = read_cmd(my_envv, cmd)))
+ 	cmd = ft_init_input(my_envv, input);
+ 	ft_strdel(&input);
+	if (!(my_envv = read_cmd(my_envv, cmd)))
 		warning("something wrong happened", NULL);
 	ft_freestrarr(cmd);
 	return (my_envv);
@@ -87,14 +88,24 @@ t_envv 	*get_cmd(t_envv *my_envv, char *input)
 t_envv *get_multpl_cmd(t_envv *my_envv, char *input)
 {
 	int 	i;
-	char	**cmd_split;
+	char	**cmds;
+	char	**cmd;
 
 	i = 0;
-	if (!(cmd_split = ft_strsplit(input, ';')))
+	if (!(cmds = ft_strsplit(input, ';')))
 		error("SPLIT ';' failed", NULL);
-	while (cmd_split[i] != NULL)
-		my_envv = get_cmd(my_envv, cmd_split[i++]);
-	free(cmd_split);
+	ft_strdel(&input);
+	while (cmds[i] != NULL)
+	{
+		if (!(cmd = ft_init_input(my_envv, cmds[i++])))
+			warning("something wrong happened", NULL);
+		if (ft_strequ(*cmd, "exit"))
+			ft_freestrarr(cmds);
+		if (!(my_envv = read_cmd(my_envv, cmd)))
+			warning("void envvironnement", NULL);
+		ft_freestrarr(cmd);
+	}
+	ft_freestrarr(cmds);
 	return (my_envv);
 }
 

@@ -45,16 +45,8 @@ char		**ft_init_input(t_envv *envv, char *input)
 	char **tmp;
 
 	if (check_void_input(input))
-	{
-		ft_strdel(&input);
 		return (NULL);
-	}
 	if (!(tmp = ft_correct(ft_strsplit_word(input), envv)))
-	{
-		ft_strdel(&input);
 		error("impossible to parse input", NULL);
-		return (NULL);
-	}
-	ft_strdel(&input);
 	return (tmp);
 }
