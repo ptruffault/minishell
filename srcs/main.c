@@ -73,11 +73,37 @@ void	ft_disp(t_envv *envv, int argc, char **argv)
 	}
 }
 
+t_envv 	*get_cmd(t_envv *my_envv, char *input)
+{
+ 	char **cmd;
+
+ 	if (!(cmd = ft_init_input(my_envv, input)) ||
+	!(my_envv = read_cmd(my_envv, cmd)))
+		warning("something wrong happened", NULL);
+	ft_freestrarr(cmd);
+	return (my_envv);
+}
+
+t_envv *get_multpl_cmd(t_envv *my_envv, char *input)
+{
+	int 	i;
+	char	**cmd_split;
+
+	i = 0;
+	if (!(cmd_split = ft_strsplit(input, ';')))
+		error("SPLIT ';' failed", NULL);
+	while (cmd_split[i] != NULL)
+		my_envv = get_cmd(my_envv, cmd_split[i++]);
+	free(cmd_split);
+	return (my_envv);
+}
+
+
 int		main(int argc, char **argv, char **envv)
 {
-	char	*tmp;
-	char	**input;
 	t_envv	*my_envv;
+	char *input;
+	char *ptr;
 
 	if (!(my_envv = new_tenvv()))
 	{
@@ -88,12 +114,15 @@ int		main(int argc, char **argv, char **envv)
 	while (1)
 	{
 		ft_disp(my_envv, argc, argv);
-		if (!(tmp = ft_get_input()))
+		if (!(input = ft_get_input()))
 			error("get_input failed", NULL);
-		else if ((input = ft_init_input(my_envv, tmp)) &&
-			!(my_envv = read_cmd(my_envv, input)))
-			init_tenvv(my_envv, envv);
-		ft_freestrarr(input);
+		if ((ptr = ft_strchr(input, ';')))
+		{
+			printf("in multp cmd\n");
+			my_envv = get_multpl_cmd(my_envv, input);
+		}
+		else
+			my_envv = get_cmd(my_envv, input);
 	}
 	return (0);
 }

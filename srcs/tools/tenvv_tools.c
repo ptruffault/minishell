@@ -52,21 +52,18 @@ int		envv_len(t_envv *envv)
 	return (i);
 }
 
-void	ft_puttenvv(t_envv *envv, int a)
+void	ft_puttenvv(t_envv *envv)
 {
 	t_envv *tmp;
 
 	tmp = envv;
-	while (tmp != NULL && tmp->name != NULL)
+	while (tmp != NULL && tmp->name != NULL && tmp->value != NULL)
 	{
 		ft_putstr("\033[1;32m\033[04m");
 		ft_putstr(tmp->name);
 		ft_putstr("\033[00m = ");
 		ft_putstr(tmp->value);
-		if (a == 1)
-			ft_putchar('\n');
-		else
-			ft_putchar(' ');
+		ft_putchar('\n');
 		tmp = tmp->next;
 	}
 }

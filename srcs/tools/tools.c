@@ -59,3 +59,38 @@ char	*get_value(char *equal)
 		return (NULL);
 	return (value);
 }
+
+char	*ft_get_input(void)
+{
+	char	*input;
+	int		ret;
+	char	buf;
+	int		i;
+	int		count;
+
+	if (!(input = ft_strnew(1)))
+		return (NULL);
+	count = 1;
+	i = 0;
+	while ((ret = read(0, &buf, 1)) && buf != '\n')
+	{
+		input[i++] = buf;
+		input = ft_realloc(input, count, count + 1);
+		count++;
+	}
+	input[i] = '\0';
+	if (!ret)
+	{
+		free(input);
+		return (NULL);
+	}
+	return (input);
+}
+
+int			check_void_input(char *s)
+{
+	while (s)
+		if (!IS_SPACE(*s++))
+			return (0);
+	return (1);
+}

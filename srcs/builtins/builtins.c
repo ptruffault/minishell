@@ -93,3 +93,16 @@ t_envv		*ft_setenv(t_envv *envv, char *name, char *value)
 	new->next = envv;
 	return (new);
 }
+
+void	ft_echo(char **input)
+{
+	int i;
+
+	i = 0;
+	while (input[i])
+	{
+		ft_putstr(input[i++]);
+		ft_putchar('\t');
+	}
+	ft_putchar('\n');
+}

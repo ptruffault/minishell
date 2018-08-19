@@ -10,25 +10,31 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME		= minishell
-GIT 		= https://github.com/ptruffault/minishell.git
+NAME		=		minishell
+GIT 		=		https://github.com/ptruffault/minishell.git
 
-FLAG		= -Wall -Wextra -Werror
+FLAG		=		-Wall -Wextra -Werror
 
-FILES		= builtins.c \
-		check_builtin.c \
-		builtin_2.c \
-		check_cmd.c \
-		main.c \
-		parse_input.c \
-		tenvv_tools_2.c \
-		tenvv_tools.c \
-		tools.c
+FILES		=		check_cmd.c \
+					main.c \
+					parse_input.c 
+TOOLS			=	tenvv_tools_2.c \
+					tenvv_tools.c \
+					tools.c 
+BUILTINS		=	builtins.c \
+					run_builtin.c \
+					ft_env.c
+FILE_FOLDER		= 	./srcs/
+TOOLS_FOLDER	= 	./srcs/tools/
+BUILTINS_FOLDER	=	./srcs/builtins/
 
-FILE_FOLDER	= ./srcs/
-OBJ_FOLDER 	= ./bin/
-SRC			= $(addprefix $(FILE_FOLDER), $(FILES)) 
-OBJ			= $(addprefix $(OBJ_FOLDER), $(FILES:.c=.o))
+OBJ_FOLDER 	= 		./bin/
+SRC			= 		$(addprefix $(FILE_FOLDER), $(FILES)) \
+					$(addprefix $(TOOLS_FOLDER), $(TOOLS)) \
+					$(addprefix $(BUILTINS_FOLDER), $(BUILTINS))  	
+OBJ			= 		$(addprefix $(OBJ_FOLDER), $(FILES:.c=.o)) \
+					$(addprefix $(OBJ_FOLDER), $(TOOLS:.c=.o)) \
+					$(addprefix $(OBJ_FOLDER), $(BUILTINS:.c=.o))
 
 COLOR		= \033[01;34m
 NO_COLOR	= \033[00m
@@ -51,6 +57,10 @@ bin/%.o: srcs/%.c
 	@echo "$(COLOR)$< : $(DONE)"
 
 bin/%.o: srcs/tools/%.c
+	@gcc $(FLAG) -I includes/ -c $< -o $@		
+	@echo "$(COLOR)$< : $(DONE)"
+
+bin/%.o: srcs/builtins/%.c
 	@gcc $(FLAG) -I includes/ -c $< -o $@		
 	@echo "$(COLOR)$< : $(DONE)"
 

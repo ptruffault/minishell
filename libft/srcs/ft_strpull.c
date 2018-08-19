@@ -24,8 +24,9 @@ char	*ft_strpull(char *src, char *ptr, int len, char *value)
 	|| !(tmp = ft_strjoin(part1, value))
 	|| !(new = ft_strjoin(tmp, part2)))
 		return (NULL);
-	free(tmp);
-	free(part1);
-	free(part2);
+	ft_strdel(&src);
+	ft_strdel(&tmp);
+	ft_strdel(&part1);
+	ft_strdel(&part2);
 	return (new);
 }

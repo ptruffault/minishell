@@ -65,6 +65,7 @@ struct	s_file
 	t_file		*next;
 };
 
+char	*ft_get_next_word(char *str);
 void	ft_putchar_color(char c, char *color);
 void	ft_putchar_color_fd(char c, char *color, int fd);
 int		ft_strarrlen(char **arr);
@@ -92,7 +93,6 @@ t_file	*ft_sort_tfile(t_file *file, int (*f)(t_file *file, t_file *tmp));
 char	*ft_new_path(char *s1, char *s2);
 char	*ft_get_prev_path(char *path);
 int		get_next_line(const int fd, char **line);
-char	*ft_get_input(void);
 int		ft_strcmp_castless(char *s1, char *s2);
 void	ft_freestrarr(char **arr);
 void	*ft_realloc(void *ptr, size_t prev_size, size_t new_size);

@@ -32,36 +32,12 @@ static int		check_arg(char **input, int n)
 	return (-1);
 }
 
-static int	check_env(char **input)
-{
-	int i;
-	int j;
-
-	i = 1;
-	while (input[i])
-	{
-		j = 1;
-		while(input[i][j])
-		{
-			if (input[i][0] == '-' && input[i][j] != 'i' && 
-			input[i][j] != '0' && input[i][j] != 'u')
-			{
-				warning_c("invalid option :", input[i][j]);
-				return (-1);
-			}
-			j++;
-		}
-		i++;
-	}
-	return (1);
-}
-
 int				check_builtin(char **input)
 {
 	if (!input[0])
 		return (1);
 	if (ft_strequ(input[0], "env"))
-		return (check_env(input));
+		return (1);
 	else if (ft_strequ(input[0], "exit"))
 		return (check_arg(input, 0));
 	else if (ft_strequ(input[0], "pwd"))
@@ -89,7 +65,7 @@ static t_envv	*change_envv(char **input, t_envv *envv)
 		return (NULL);
 	}
 	else if (ft_strequ(input[0], "env"))
-		envv = ft_env(input, envv);
+		ft_env(input, envv);
 	return (envv);
 }
 

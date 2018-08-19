@@ -58,7 +58,7 @@ static char	*check_exe(char *bin_path, struct stat inf)
 	return (NULL);
 }
 
-char		*local_try(char **input, t_envv *envv)
+static char		*local_try(char **input, t_envv *envv)
 {
 	char		*path;
 	struct stat	inf;
