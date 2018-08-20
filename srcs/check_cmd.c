@@ -12,31 +12,6 @@
 
 #include "../includes/minishell.h"
 
-int			run_bin(char *path, char **args, t_envv *envv)
-{
-	pid_t	pid;
-	char	**arr;
-
-	if ((pid = fork()) == 0)
-	{
-		if (!(arr = put_in_tab(envv)))
-		{
-			error("t_envv convertion **arr failed", NULL);
-			free(path);
-			return (-1);
-		}
-		execve(path, args, arr);
-	}
-	else if (pid < 0)
-	{
-		error("Fork failed to create a new process", path);
-		free(path);
-		return (-1);
-	}
-	wait(&pid);
-	return (1);
-}
-
 static char	*check_exe(char *bin_path, struct stat inf)
 {
 	if (inf.st_mode & S_IFREG)

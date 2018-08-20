@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-static char 		**ft_correct(char **input, t_envv *envv)
+char 		**ft_correct(char **input, t_envv *envv)
 {
 	int i;
 	char *val;
@@ -34,19 +34,13 @@ static char 		**ft_correct(char **input, t_envv *envv)
 				i++;
 			ft_strdel(&var_name);
 		}
+		else if (input[i][0] == '~' && !input[i][1])
+		{
+			ft_strdel(&input[i]);
+			input[i] = ft_strdup(get_tenvv_val(envv, "OLDPWD"));
+		}
 		else
 			i++;
 	}
 	return (input);
-}
-
-char		**ft_init_input(t_envv *envv, char *input)
-{
-	char **tmp;
-
-	if (check_void_input(input))
-		return (NULL);
-	if (!(tmp = ft_correct(ft_strsplit_word(input), envv)))
-		error("impossible to parse input", NULL);
-	return (tmp);
 }

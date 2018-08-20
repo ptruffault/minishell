@@ -34,30 +34,6 @@ void	init_tenvv(t_envv *envv, char **tab_envv)
 	tmp = NULL;
 }
 
-t_envv	*read_cmd(t_envv *envv, char **input)
-{
-	int		inf;
-	t_envv	*tmp;
-	char	*bin_path;
-
-	inf = check_builtin(input);
-	if (inf == 1)
-	{
-		if (!(tmp = run_builtin(input, envv)))
-			return (envv);
-		return (tmp);
-	}
-	else if (inf == 0)
-	{
-		if ((bin_path = check_bin(input, envv))
-		&& (run_bin(bin_path, input, envv) > 0))
-			free(bin_path);
-		else if (!bin_path)
-			error("command not found", NULL);
-	}
-	return (envv);
-}
-
 void	ft_disp(t_envv *envv, int argc, char **argv)
 {
 	if (argc != 1)
@@ -73,48 +49,9 @@ void	ft_disp(t_envv *envv, int argc, char **argv)
 	}
 }
 
-t_envv 	*get_cmd(t_envv *my_envv, char *input)
-{
- 	char **cmd;
-
- 	cmd = ft_init_input(my_envv, input);
- 	ft_strdel(&input);
-	if (!(my_envv = read_cmd(my_envv, cmd)))
-		warning("something wrong happened", NULL);
-	ft_freestrarr(cmd);
-	return (my_envv);
-}
-
-t_envv *get_multpl_cmd(t_envv *my_envv, char *input)
-{
-	int 	i;
-	char	**cmds;
-	char	**cmd;
-
-	i = 0;
-	if (!(cmds = ft_strsplit(input, ';')))
-		error("SPLIT ';' failed", NULL);
-	ft_strdel(&input);
-	while (cmds[i] != NULL)
-	{
-		if (!(cmd = ft_init_input(my_envv, cmds[i++])))
-			warning("something wrong happened", NULL);
-		if (ft_strequ(*cmd, "exit"))
-			ft_freestrarr(cmds);
-		if (!(my_envv = read_cmd(my_envv, cmd)))
-			warning("void envvironnement", NULL);
-		ft_freestrarr(cmd);
-	}
-	ft_freestrarr(cmds);
-	return (my_envv);
-}
-
-
 int		main(int argc, char **argv, char **envv)
 {
 	t_envv	*my_envv;
-	char *input;
-	char *ptr;
 
 	if (!(my_envv = new_tenvv()))
 	{
@@ -125,15 +62,7 @@ int		main(int argc, char **argv, char **envv)
 	while (1)
 	{
 		ft_disp(my_envv, argc, argv);
-		if (!(input = ft_get_input()))
-			error("get_input failed", NULL);
-		if ((ptr = ft_strchr(input, ';')))
-		{
-			printf("in multp cmd\n");
-			my_envv = get_multpl_cmd(my_envv, input);
-		}
-		else
-			my_envv = get_cmd(my_envv, input);
+		my_envv = read_cmd(my_envv, ft_get_input());
 	}
 	return (0);
 }

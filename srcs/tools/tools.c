@@ -89,8 +89,11 @@ char	*ft_get_input(void)
 
 int			check_void_input(char *s)
 {
-	while (s)
-		if (!IS_SPACE(*s++))
+	int i;
+
+	i = 0;
+	while (s[i])
+		if (!IS_SPACE(s[i++]))
 			return (0);
 	return (1);
 }

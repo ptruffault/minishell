@@ -17,7 +17,8 @@ FLAG		=		-Wall -Wextra -Werror
 
 FILES		=		check_cmd.c \
 					main.c \
-					parse_input.c 
+					correct_input.c \
+					run_cmd.c
 TOOLS			=	tenvv_tools_2.c \
 					tenvv_tools.c \
 					tools.c 
