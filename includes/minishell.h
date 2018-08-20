@@ -29,16 +29,9 @@ struct	s_envv
 	t_envv	*next;
 };
 
-typedef struct  s_opts
-{
-	int i;
-	int u;
-	int aff;
-}				t_opts;
-
-char 		**ft_correct(char **input, t_envv *envv);
-t_envv 	*read_cmd(t_envv *my_envv, char *input);
-t_envv *read_cmds(t_envv *my_envv, char *input);
+char	**ft_correct(char **input, t_envv *envv);
+t_envv	*read_cmd(t_envv *my_envv, char *input);
+t_envv	*read_cmds(t_envv *my_envv, char *input);
 t_envv	*check_and_run_cmd(t_envv *envv, char **input);
 int		check_void_input(char *s);
 char	*ft_get_input(void);

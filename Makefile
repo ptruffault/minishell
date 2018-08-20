@@ -69,13 +69,13 @@ clear:
 	@clear
 
 clean:
-	@rm -rf $(OBJ) $(OBJ_FOLDER)$(NAME).a
-	@rm -rf $(NAME)
-
+	@rm -rf $(OBJ)
+	@make -C ./libft clean	
 fclean: clean
-	@make -C libft fclean
+	rm -rf $(NAME)
+	@make -C ./libft fclean	
 
-re: clear clean all
+re: clear fclean all
 
 exe: re
 	./$(NAME)

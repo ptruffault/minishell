@@ -40,16 +40,11 @@ static int	run_bin(char *path, char **args, t_envv *envv)
 t_envv		*check_and_run_cmd(t_envv *envv, char **input)
 {
 	int		inf;
-	t_envv	*tmp;
 	char	*bin_path;
 
 	inf = check_builtin(input);
 	if (inf == 1)
-	{
-		if (!(tmp = run_builtin(input, envv)))
-			return (envv);
-		return (tmp);
-	}
+		return (run_builtin(input, envv));
 	else if (inf == 0)
 	{
 		if ((bin_path = check_bin(input, envv))
@@ -70,8 +65,7 @@ t_envv		*read_cmd(t_envv *envv, char *input)
 	else if (!(cmd = ft_correct(ft_strsplit_word(input), envv)))
 		error("impossible to parse input", NULL);
 	ft_strdel(&input);
-	if (!(envv = check_and_run_cmd(envv, cmd)))
-		warning("something wrong happened", NULL);
+	envv = check_and_run_cmd(envv, cmd);
 	ft_freestrarr(cmd);
 	return (envv);
 }

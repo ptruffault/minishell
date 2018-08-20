@@ -82,7 +82,7 @@ void			ft_env(char **input, t_envv *envv)
 			tmp = ft_tmpsetenv(tmp, input[i]);
 		else
 		{
-			tmp = check_and_run_cmd(tmp, &input[i]);
+			tmp = check_and_run_cmd(tmp, ft_correct(&input[i], tmp));
 			ft_free_tenvv(tmp);
 			return ;
 		}
