@@ -45,7 +45,7 @@ int				check_builtin(char **input)
 	else if (ft_strequ(input[0], "unsetenv") || ft_strequ(input[0], "unset"))
 		return (check_arg(input, 1));
 	else if (ft_strequ(input[0], "setenv") || ft_strequ(input[0], "export"))
-		return (check_arg(input, 2));
+		return (1);
 	else if (ft_strequ(input[0], "cd"))
 		return (1);
 	else if (ft_strequ(input[0], "echo"))
@@ -56,13 +56,24 @@ int				check_builtin(char **input)
 
 static t_envv	*change_envv(char **input, t_envv *envv)
 {
+	char *n;
+	char *v;
+
 	if (ft_strequ(input[0], "unsetenv") || ft_strequ(input[0], "unset"))
 		return (ft_unsetenv(envv, input[1]));
-	else if ((ft_strequ(input[0], "setenv") || ft_strequ(input[0], "export")) &&
-	(!(envv = ft_setenv(envv, input[1], input[2]))))
+	else if ((ft_strequ(input[0], "setenv") || ft_strequ(input[0], "export")))
 	{
-		error("impossible to create", input[1]);
-		return (NULL);
+		if (!input[2] && (ft_strchr(input[1], '=')))
+		{
+			
+			if (!(n = get_name(input[1])) || !(v = get_value(input[1])) || 
+			!(envv = ft_setenv(envv, n, v)))
+				return (NULL);
+			ft_strdel(&n);
+			ft_strdel(&v);
+		}
+		else if (!(envv = ft_setenv(envv, input[1], input[2])))
+			return (NULL);
 	}
 	else if (ft_strequ(input[0], "env"))
 		ft_env(input, envv);

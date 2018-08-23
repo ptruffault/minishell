@@ -12,6 +12,42 @@
 
 #include "../includes/minishell.h"
 
+static char	*ft_correct_one(t_envv *envv, char *s, char *ptr)
+{
+	char *ret;
+	char *val;
+	char *var_name;
+
+	var_name = ft_get_next_word(ptr + 1);
+	val = ft_strdup(get_tenvv_val(envv, var_name));
+	ret = ft_strpull(s, ptr, ft_strlen(var_name), val);
+	ft_strdel(&val);
+	ft_strdel(&var_name);
+	ft_strdel(&s);
+	return (ret);
+}
+
+char	**ft_correct(char **input, t_envv *envv)
+{
+	int		i;
+	char	*ptr;
+
+	i = 0;
+	while (input[i])
+	{
+		if ((ptr = ft_strchr(input[i], '$')) && !IS_SPACE(*(ptr + 1)))
+			input[i] = ft_correct_one(envv, input[i], ptr);
+		else if (input[i][0] == '~' && !input[i][1])
+		{
+			ft_strdel(&input[i]);
+			input[i] = ft_strdup(get_tenvv_val(envv, "OLDPWD"));
+		}
+		else
+			i++;
+	}
+	return (input);
+}
+
 static int	run_bin(char *path, char **args, t_envv *envv)
 {
 	pid_t	pid;
@@ -61,7 +97,10 @@ t_envv		*read_cmd(t_envv *envv, char *input)
 	char **cmd;
 
 	if (check_void_input(input))
-		cmd = NULL;
+	{
+		ft_strdel(&input);
+		return (envv);
+	}
 	else if (!(cmd = ft_correct(ft_strsplit_word(input), envv)))
 		error("impossible to parse input", NULL);
 	ft_strdel(&input);
