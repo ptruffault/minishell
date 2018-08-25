@@ -78,7 +78,7 @@ fclean: clean
 
 re: clear fclean all
 
-exe: re
+exe: all
 	./$(NAME)
 
 test:

@@ -21,7 +21,7 @@ char	*ft_correct_one(t_envv *envv, char *s, char *ptr)
 	ret = NULL;
 	if ((var_name = ft_get_next_word(ptr + 1))
 	&& (val = ft_strdup(get_tenvv_val(envv, var_name))))
-		ret = ft_strpull(s, ptr, ft_strlen(var_name) + 1, val);
+		ret = ft_strpull(s, ptr, ft_strlen(var_name), val);
 	ft_strdel(&s);
 	ft_strdel(&val);
 	ft_strdel(&var_name);
@@ -34,15 +34,16 @@ char	**ft_correct(char **input, t_envv *envv)
 	char	*ptr;
 
 	i = 0;
-	if (!input)
-		return (NULL);
 	while (input[i])
 	{
 		if ((ptr = ft_strchr(input[i], '$')) && !IS_SPACE(*(ptr + 1))
 		&& (ptr - input[i] == 0 || IS_SPACE(*(ptr - 1))))
 		{
 			if (!(input[i] = ft_correct_one(envv, input[i], ptr)))
-				input[i] = ft_strdup("\033[00;31m{unknow var}\033[00m");
+			{
+				ft_freestrarr(input);
+				return (NULL);
+			}
 		}
 		else if ((ptr = ft_strchr(input[i], '~')))
 		{
