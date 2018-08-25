@@ -16,8 +16,8 @@ int		main(int argc, char **argv, char **envv)
 {
 	t_envv	*my_envv;
 	char	**input;
-	char 	*s;
-	int i;
+	char	*s;
+	int		i;
 
 	if (!(my_envv = new_tenvv()))
 		return (-1);

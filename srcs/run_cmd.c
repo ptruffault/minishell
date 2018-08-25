@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-static int		envv_len(t_envv *envv)
+static int	envv_len(t_envv *envv)
 {
 	t_envv	*tmp;
 	int		i;
@@ -74,7 +74,7 @@ static int	ft_exec(char *path, char **args, t_envv *envv)
 	return (1);
 }
 
-void 	run_bin(char **args, t_envv *envv)
+void		run_bin(char **args, t_envv *envv)
 {
 	char *bin_path;
 

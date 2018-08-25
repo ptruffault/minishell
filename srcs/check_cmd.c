@@ -85,7 +85,7 @@ char		*check_bin(char **input, t_envv *envv)
 		return (bin_path);
 	if (!(path = ft_strsplit(get_tenvv_val(envv, "PATH"), ':')))
 	{
-		warning("PATH might be empty" , NULL);
+		warning("PATH might be empty", NULL);
 		return (NULL);
 	}
 	return (check_path(input, path));

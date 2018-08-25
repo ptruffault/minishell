@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ptruffau <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/07/04 14:11:06 by ptruffau          #+#    #+#             */
+/*   Updated: 2018/07/04 14:11:07 by ptruffau         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
@@ -34,7 +45,7 @@ static void	ft_p4(t_envv *e)
 	ft_putstr(NORMAL);
 }
 
-void	ft_disp(t_envv *envv, int argc, char **argv)
+void		ft_disp(t_envv *envv, int argc, char **argv)
 {
 	if (argc != 1)
 	{
