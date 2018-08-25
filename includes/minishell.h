@@ -30,7 +30,7 @@ struct	s_envv
 };
 
 void	ft_disp(t_envv *envv, int argc, char **argv);
-void 	run_bin(char **args, t_envv *envv);
+void	run_bin(char **args, t_envv *envv);
 char	**ft_correct(char **input, t_envv *envv);
 t_envv	*read_cmd(t_envv *my_envv, char *input, char **arr);
 int		check_void_input(char *s);

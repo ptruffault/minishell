@@ -18,9 +18,10 @@ char	*ft_correct_one(t_envv *envv, char *s, char *ptr)
 	char *val;
 	char *var_name;
 
-	var_name = ft_get_next_word(ptr + 1);
-	val = ft_strdup(get_tenvv_val(envv, var_name));
-	ret = ft_strpull(s, ptr, ft_strlen(var_name) + 1, val);
+	ret = NULL;
+	if ((var_name = ft_get_next_word(ptr + 1))
+	&& (val = ft_strdup(get_tenvv_val(envv, var_name))))
+		ret = ft_strpull(s, ptr, ft_strlen(var_name) + 1, val);
 	ft_strdel(&s);
 	ft_strdel(&val);
 	ft_strdel(&var_name);
