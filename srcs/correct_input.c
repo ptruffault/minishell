@@ -21,8 +21,10 @@ char	*ft_correct_one(t_envv *envv, char *s, char *ptr)
 	ret = NULL;
 	if ((var_name = ft_get_next_word(ptr + 1))
 	&& (val = ft_strdup(get_tenvv_val(envv, var_name))))
+	{
 		ret = ft_strpull(s, ptr, ft_strlen(var_name), val);
-	ft_strdel(&s);
+		ft_strdel(&s);
+	}
 	ft_strdel(&val);
 	ft_strdel(&var_name);
 	return (ret);
@@ -32,6 +34,7 @@ char	**ft_correct(char **input, t_envv *envv)
 {
 	int		i;
 	char	*ptr;
+	char	*tmp;
 
 	i = 0;
 	while (input[i])
@@ -39,17 +42,16 @@ char	**ft_correct(char **input, t_envv *envv)
 		if ((ptr = ft_strchr(input[i], '$')) && !IS_SPACE(*(ptr + 1))
 		&& (ptr - input[i] == 0 || IS_SPACE(*(ptr - 1))))
 		{
-			if (!(input[i] = ft_correct_one(envv, input[i], ptr)))
-			{
-				ft_freestrarr(input);
-				return (NULL);
-			}
+			if (!(tmp = ft_correct_one(envv, input[i], ptr)))
+				i++;
+			else
+				input[i] = tmp;
 		}
 		else if ((ptr = ft_strchr(input[i], '~')))
 		{
-			ptr = ft_strpull(input[i], ptr, 1, get_tenvv_val(envv, "OLDPWD"));
+			tmp = ft_strpull(input[i], ptr, 1, get_tenvv_val(envv, "OLDPWD"));
 			ft_strdel(&input[i]);
-			input[i] = ptr;
+			input[i] = tmp;
 		}
 		else
 			i++;

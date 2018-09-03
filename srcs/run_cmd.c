@@ -82,7 +82,7 @@ void		run_bin(char **args, t_envv *envv)
 	&& (ft_exec(bin_path, args, envv) > 0))
 		ft_strdel(&bin_path);
 	else if (!bin_path)
-		error("command not found", NULL);
+		error("command not found", *args);
 }
 
 t_envv		*read_cmd(t_envv *envv, char *input, char **arr)
