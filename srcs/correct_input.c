@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-char	*ft_correct_one(t_envv *envv, char *s, char *ptr)
+static char	*ft_correct_one(t_envv *envv, char *s, char *ptr)
 {
 	char *ret;
 	char *val;
@@ -49,7 +49,7 @@ char	**ft_correct(char **input, t_envv *envv)
 		}
 		else if ((ptr = ft_strchr(input[i], '~')))
 		{
-			tmp = ft_strpull(input[i], ptr, 1, get_tenvv_val(envv, "OLDPWD"));
+			tmp = ft_strpull(input[i], ptr, 0, get_tenvv_val(envv, "OLDPWD"));
 			ft_strdel(&input[i]);
 			input[i] = tmp;
 		}
