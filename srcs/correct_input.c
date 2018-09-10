@@ -30,7 +30,7 @@ static char	*ft_correct_one(t_envv *envv, char *s, char *ptr)
 	return (ret);
 }
 
-char	**ft_correct(char **input, t_envv *envv)
+char		**ft_correct(char **input, t_envv *envv)
 {
 	int		i;
 	char	*ptr;
