@@ -37,12 +37,12 @@ static char	**put_in_tab(t_envv *envv)
 	i = 0;
 	tmp = envv;
 	len = envv_len(envv) - 1;
-	if (!(tab = (char **)malloc(sizeof(char *) * (len + 1))))
+	if (!(tab = (char **)malloc(sizeof(char *) * len + 1)))
 		return (NULL);
 	while (i < len)
 	{
-		if (!(tab[i++] = get_equal(tmp->name, tmp->value)))
-			return (NULL);
+		if ((tab[i] = get_equal(tmp->name, tmp->value)))
+			i++;
 		tmp = tmp->next;
 	}
 	tab[i] = NULL;
@@ -54,14 +54,14 @@ static int	ft_exec(char *path, char **args, t_envv *envv)
 	pid_t	pid;
 	char	**arr;
 
+	if (!(arr = put_in_tab(envv)))
+	{
+		error("t_envv convertion **arr failed", NULL);
+		ft_strdel(&path);
+		return (-1);
+	}
 	if ((pid = fork()) == 0)
 	{
-		if (!(arr = put_in_tab(envv)))
-		{
-			error("t_envv convertion **arr failed", NULL);
-			ft_strdel(&path);
-			return (-1);
-		}
 		execve(path, args, arr);
 	}
 	else if (pid < 0)
@@ -70,6 +70,7 @@ static int	ft_exec(char *path, char **args, t_envv *envv)
 		ft_strdel(&path);
 		return (-1);
 	}
+	ft_freestrarr(arr);
 	wait(&pid);
 	return (1);
 }

@@ -20,8 +20,8 @@ static void	change_dir(char *path, t_envv *envv)
 	cwd = getcwd(buff, 4096);
 	if (!chdir(path))
 	{
-		ft_changetenvv_val(envv, "OLDPWD", cwd);
-		ft_changetenvv_val(envv, "PWD", getcwd(buff, 4096));
+		ft_setenv(envv, "OLDPWD", cwd);
+		ft_setenv(envv, "PWD", getcwd(buff, 4096));
 	}
 	else
 	{
@@ -31,7 +31,6 @@ static void	change_dir(char *path, t_envv *envv)
 			error("permission denied: ", path);
 		else
 			error("not a directory: ", path);
-		ft_putendl(path);
 	}
 }
 

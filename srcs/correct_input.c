@@ -49,7 +49,7 @@ char		**ft_correct(char **input, t_envv *envv)
 		}
 		else if ((ptr = ft_strchr(input[i], '~')))
 		{
-			tmp = ft_strpull(input[i], ptr, 0, get_tenvv_val(envv, "OLDPWD"));
+			tmp = ft_strpull(input[i], ptr, 0, get_tenvv_val(envv, "HOME"));
 			ft_strdel(&input[i]);
 			input[i] = tmp;
 		}
