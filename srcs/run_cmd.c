@@ -54,12 +54,7 @@ static int	ft_exec(char *path, char **args, t_envv *envv)
 	pid_t	pid;
 	char	**arr;
 
-	if (!(arr = put_in_tab(envv)))
-	{
-		error("t_envv convertion **arr failed", NULL);
-		ft_strdel(&path);
-		return (-1);
-	}
+	arr = put_in_tab(envv);
 	if ((pid = fork()) == 0)
 	{
 		execve(path, args, arr);

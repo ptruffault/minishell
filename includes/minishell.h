@@ -21,6 +21,8 @@
 # include <dirent.h>
 # include "../libft/includes/libft.h"
 
+# define USER "zam"
+# define HOME "/home/zam"
 typedef struct s_envv	t_envv;
 struct	s_envv
 {
@@ -35,12 +37,12 @@ char	**ft_correct(char **input, t_envv *envv);
 t_envv	*read_cmd(t_envv *my_envv, char *input, char **arr);
 int		check_void_input(char *s);
 char	*ft_get_input(void);
-void	init_tenvv(t_envv *envv, char **tab_envv);
+t_envv	*init_tenvv(t_envv *envv, char **tab_envv);
 int		check_cmd(char *input, t_envv *envv);
 char	*check_bin(char **input, t_envv *envv);
 int		check_builtin(char **input);
 t_envv	*run_builtin(char **input, t_envv *envv, char **arr);
-void	ft_cd(char **input, t_envv *envv);
+t_envv	*ft_cd(char **input, t_envv *envv);
 t_envv	*ft_setenv(t_envv *envv, char *name, char *value);
 t_envv	*ft_unsetenv(t_envv *envv, char *name);
 t_envv	*get_tenvv(t_envv *envv, char *name);

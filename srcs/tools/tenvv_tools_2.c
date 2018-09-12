@@ -24,7 +24,7 @@ t_envv	*new_tenvv(void)
 	return (new);
 }
 
-void	init_tenvv(t_envv *envv, char **tab_envv)
+t_envv	*init_tenvv(t_envv *envv, char **tab_envv)
 {
 	int		i;
 	int		len;
@@ -37,13 +37,15 @@ void	init_tenvv(t_envv *envv, char **tab_envv)
 	{
 		if (!(tmp->name = get_name(tab_envv[i]))
 		|| !(tmp->value = get_value(tab_envv[i])))
-			return ;
+			return (envv);
 		i++;
 		if (!(tmp->next = new_tenvv()))
-			return ;
+			return (envv);
 		tmp = tmp->next;
 	}
-	tmp = NULL;
+	envv = ft_setenv(envv, "USER", USER);
+	envv = ft_setenv(envv, "HOME", HOME);
+	return (envv);
 }
 
 t_envv	*ft_tenvv_cpy(t_envv *src)

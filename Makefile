@@ -24,6 +24,7 @@ TOOLS			=	tenvv_tools_2.c \
 					tenvv_tools.c \
 					tools.c 
 BUILTINS		=	builtins.c \
+					ft_cd.c \
 					run_builtin.c \
 					ft_env.c
 FILE_FOLDER		= 	./srcs/
@@ -44,6 +45,7 @@ OP_COLOR	= \033[1;31m
 DONE 		= $(NO_COLOR)[\033[1;32mOK$(NO_COLOR)]
 
 all: bin $(NAME)
+	@sudo cp $(NAME) /bin/minishell
 
 $(NAME): $(OBJ) Makefile includes/$(NAME).h
 	@make -C libft all
