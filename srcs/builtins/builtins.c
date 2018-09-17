@@ -46,15 +46,14 @@ t_envv		*ft_setenv(t_envv *envv, char *name, char *value)
 	t_envv *tmp;
 
 	if ((tmp = get_tenvv(envv, name)))
-	{
-		if (!(envv = ft_changetenvv_val(envv, name, value)))
-			return (NULL);
-		return (envv);
-	}
+		return (ft_changetenvv_val(envv, name, value));
 	if (!(new = new_tenvv())
 	|| !(new->name = ft_strdup(name))
 	|| !(new->value = ft_strdup(value)))
-		return (NULL);
+	{
+		del_tenvv(new);
+		return (envv);
+	}
 	new->next = envv;
 	return (new);
 }

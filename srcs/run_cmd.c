@@ -89,7 +89,10 @@ t_envv		*read_cmd(t_envv *envv, char *input, char **arr)
 	if (check_void_input(input))
 		return (envv);
 	else if (!(cmd = ft_correct(ft_strsplit_word(input), envv)))
+	{
+		printf("wygrqu\n");
 		return (envv);
+	}
 	inf = check_builtin(cmd);
 	if (inf == 1)
 		envv = run_builtin(cmd, envv, arr);

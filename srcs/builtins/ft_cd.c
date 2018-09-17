@@ -33,10 +33,10 @@ static t_envv	*change_dir(char *path, char *cwd, t_envv *envv)
 	return (envv);
 }
 
-t_envv		*ft_cd(char **input, t_envv *envv)
+t_envv			*ft_cd(char **input, t_envv *envv)
 {
 	char *cwd;
-	char	buff[4097];
+	char buff[4097];
 
 	cwd = getcwd(buff, 4096);
 	if (!get_tenvv(envv, "OLDPWD"))
@@ -44,10 +44,10 @@ t_envv		*ft_cd(char **input, t_envv *envv)
 	if (!get_tenvv(envv, "HOME"))
 		envv = ft_setenv(envv, "HOME", "/home");
 	if (!(input[1]))
-		return (change_dir(get_tenvv_val(envv, "HOME"), cwd,  envv));
+		return (change_dir(get_tenvv_val(envv, "HOME"), cwd, envv));
 	else if (input[1][0] == '-' && input[1][1] == '\0')
-		return (envv = change_dir(get_tenvv_val(envv, "OLDPWD"), cwd,  envv));
+		return (envv = change_dir(get_tenvv_val(envv, "OLDPWD"), cwd, envv));
 	else if (input[1])
-		return (change_dir(input[1], cwd,  envv));
+		return (change_dir(input[1], cwd, envv));
 	return (envv);
 }

@@ -21,8 +21,9 @@
 # include <dirent.h>
 # include "../libft/includes/libft.h"
 
-# define USER "zam"
-# define HOME "/home/zam"
+# define USER "ptruffau"
+# define HOME "/Users/ptruffau/"
+
 typedef struct s_envv	t_envv;
 struct	s_envv
 {

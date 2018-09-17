@@ -21,7 +21,7 @@ int		main(int argc, char **argv, char **envv)
 
 	if (!(my_envv = new_tenvv()))
 		return (-1);
-	my_envv = init_tenvv(my_envv, envv); 
+	my_envv = init_tenvv(my_envv, envv);
 	while (1)
 	{
 		ft_disp(my_envv, argc, argv);
